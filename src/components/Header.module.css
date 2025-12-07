@@ -1,0 +1,104 @@
+/* MAIN HERO AREA */
+.heroArea {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.btnDotsContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px; /* spacing from text */
+}
+
+
+/* BACKGROUND IMAGE */
+.bgBox img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.sliderItem {
+  position: relative;
+  height: 500px; /* adjust as needed */
+  background-size: cover;
+  background-position: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.textBox {
+  direction: rtl;
+  position: absolute;
+  top: 60%;
+  right: 47%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  max-width: 28%;
+}
+
+.title {
+  font-size: 55px;
+  margin-bottom: 20px;
+}
+
+.text {
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+:global(.slick-dots) {
+  position: static !important;
+  margin-top: 40px;
+  text-align: left;
+  margin-left: 20%;
+}
+/* DOTS STYLE (optional – affects only this slider because of module scoping) */
+/* DOTS STYLE – bigger dots */
+:global(.slick-dots li button:before) {
+  font-size: 20px !important; /* increased from 12px to 20px */
+  color: white !important;
+}
+
+:global(.slick-dots li.slick-active button:before) {
+  color: #ffcc00 !important;
+}
+
+/* ARROWS (optional if you use them later) */
+:global(.slick-prev:before),
+:global(.slick-next:before) {
+  color: white !important;
+  font-size: 26px !important;
+}
+
+.btnBox {
+  margin-top: 20px;
+}
+
+.btnBox .btn1 {
+  display: inline-block;
+  padding: 8px 30px;
+  background-color: #ffbe33;
+  color: #ffffff;
+  border-radius: 45px;
+  transition: all 0.3s;
+  border: none;
+  text-decoration: none; /* remove underline from <a> */
+  cursor: pointer;
+}
+
+.btnBox .btn1:hover {
+  background-color: #ffaa00; /* optional hover effect */
+  transform: translateY(-2px);
+}

@@ -1,0 +1,22 @@
+.bottom-arrows-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.bottom-arrow {
+  background: #FFBE2C;
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  font-size: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.bottom-arrow:hover {
+  background: #ffbe33;
+  color: #000;
+}
