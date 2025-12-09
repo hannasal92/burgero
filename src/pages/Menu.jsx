@@ -7,7 +7,7 @@ import { useCart } from "../context/useCart"; // <-- import your CartContext
 export default function Menu() {
   const [filter, setFilter] = useState("*");
   const { addToCart } = useCart(); // <-- get the addToCart function
-
+  const [addedItem, setAddedItem] = useState(null);
   const menuItems = [
     { id: 1, category: "pizza", name: "פיצה טעימה", description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר." ,price: 20, img: "f1.png" },
     { id: 2, category: "burger", name: "בורגיר טעים",description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר.", price: 15, img: "f2.png" },
@@ -34,9 +34,11 @@ export default function Menu() {
 
   const handleAddToCart = (item) => {
     addToCart({ ...item, quantity: 1, note: "" }); // add quantity & note fields
+    setAddedItem(item.name); // set the toast message
+    setTimeout(() => setAddedItem(null), 2000);
   };
 
-  return (
+return (
     <section className="food_section layout_padding-bottom" style={{ padding: "20px" }}>
       <div className="container">
         <div className="heading_container heading_center">
@@ -91,6 +93,31 @@ export default function Menu() {
             </AnimatePresence>
           </div>
         </div>
+
+        {/* Toast Notification */}
+        <AnimatePresence>
+          {addedItem && (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              transition={{ duration: 0.5 }}
+              style={{
+                position: "fixed",
+                bottom: 20,
+                right: 20,
+                background: "#FFD700", // yellow
+                color: "#000",
+                padding: "12px 20px",
+                borderRadius: "12px",
+                boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+                zIndex: 9999,
+              }}
+            >
+              {addedItem} נוסף לעגלה! 🛒
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
