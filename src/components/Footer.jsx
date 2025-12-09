@@ -32,7 +32,7 @@ export default function Footer() {
 
           <div className="col-md-4 footer-col">
             <div className="footer_detail">
-              <Link to="#" className="footer-logo">burgero</Link>
+              <Link to="#" className="footer-logo">burgero bar</Link>
               <p>
                 המסעדה שלנו מציעה מגוון המבורגרים עסיסיים, טריים ומיוחדים, בשילוב טעמים ייחודיים, רטבים ביתיים ולחמניות חמות, עם שירות מקצועי, אווירה נעימה וחוויית אוכל בלתי נשכחת לכל לקוח
               </p>

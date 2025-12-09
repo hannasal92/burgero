@@ -60,7 +60,7 @@ export default function Header() {
       <header className="header_section">
         <div className="container">
           <nav className="navbar navbar-expand-lg custom_nav-container">
-            <Link className="navbar-brand" to="/home"><span>Burgero</span></Link>
+            <Link className="navbar-brand" to="/home"><span>Burgero Bar</span></Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -116,7 +116,7 @@ export default function Header() {
               <p className={styles.text}>{slider.text}</p>
 
             <div className={styles.btnBox}>
-            <Button className={styles.btn1}>
+            <Button className={styles.btn1} onClick={handleClick}>
               תזמין עכשיו
             </Button>
           </div>

@@ -24,7 +24,7 @@ export default function Header() {
         
                     {/* Logo */}
                     <Link className="navbar-brand text-white" to="/home">
-                      <span >Burgero</span>
+                      <span >Burgero Bar</span>
                     </Link>
         
                     {/* Mobile toggle button */}
