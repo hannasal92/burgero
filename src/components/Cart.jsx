@@ -55,7 +55,7 @@ export default function Cart({
 
           <div className="cart-total">
             <h3>סכום כולל: {total} ₪</h3>
-            <button className="checkout-btn">למעבר לתשלום</button>
+            
           </div>
         </>
       )}
