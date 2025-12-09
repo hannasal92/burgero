@@ -4,13 +4,17 @@ import "slick-carousel/slick/slick-theme.css";
 import { useState } from "react";
 import CartIcon from "../components/common/CartIcon";
 import Button from "../components/common/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/useCart";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { getTotal } = useCart();
+  const navigate = useNavigate();
 
+  const handleClick = () => {
+    navigate("/menu"); // navigate to /menu
+  };
   return (
         <>
               {/* ---------------- HEADER ---------------- */}
@@ -57,7 +61,7 @@ export default function Header() {
                       </form>
         
                       {/* Order Online Link */}
-                    <Button className="order_online">
+                    <Button className="order_online" onClick={handleClick}>
                       תזמין אונליין
                     </Button>
                       {/* Cart Icon */}
