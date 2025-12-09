@@ -66,7 +66,7 @@ export default function Header() {
             <div className={`collapse navbar-collapse ${isOpen ? "show" : ""}`}>
               <ul className="navbar-nav mx-auto">
                 <li className="nav-item active"><Link className="nav-link" to="/home">בית</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/menue">תפריט</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/menu">תפריט</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/about">עלינו</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/bookTable">הזמנת שולחן</Link></li>
               </ul>

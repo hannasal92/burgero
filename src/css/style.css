@@ -1023,4 +1023,29 @@ a:focus {
 .footer_section .footer-info p a {
   color: inherit;
 }
+
+.inner_page_head {
+  background: linear-gradient(135deg, #ff6b6b, #f06595); /* Beautiful gradient */
+  padding: 100px 0; /* Vertical spacing */
+  text-align: center; /* Center text horizontally */
+  color: #fff;
+}
+
+.inner_page_head .full h3 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .inner_page_head {
+    padding: 60px 0;
+  }
+  
+  .inner_page_head .full h3 {
+    font-size: 28px;
+  }
+}
 /*# sourceMappingURL=style.css.map */
