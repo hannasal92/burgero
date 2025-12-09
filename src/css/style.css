@@ -6,6 +6,15 @@ body {
   overflow-x: hidden;
 }
 
+.content-wrap {
+  flex: 1; /* push footer to bottom if content is short */
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 .map_container {
   width: 100%;
   height: 400px; /* or whatever height you want */

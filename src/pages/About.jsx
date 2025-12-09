@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function About(){
     return (
         <>
@@ -20,9 +22,9 @@ export default function About(){
                     <p>
                      המסעדה שלנו מציעה מגוון המבורגרים עסיסיים, טריים ומיוחדים, בשילוב טעמים ייחודיים, רטבים ביתיים ולחמניות חמות, עם שירות מקצועי, אווירה נעימה וחוויית אוכל בלתי נשכחת לכל לקוח
                     </p>
-                    <a href="">
+                    <Link to="">
                     Read More
-                    </a>
+                    </Link>
                 </div>
                 </div>
             </div>

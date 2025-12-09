@@ -4,23 +4,40 @@
   height: 100vh;
   overflow: hidden;
 }
-
+.bgBox {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+}
 .btnDotsContainer {
   display: flex;
   flex-direction: column;
   margin-top: 20px; /* spacing from text */
 }
 
+/* Optional: make it full screen for hero section */
+@media (max-width: 768px) {
+  .bg-box {
+    height: 300px; /* adjust for mobile */
+  }
 
+  .bg-box img {
+    height: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .bg-box {
+    height: 200px; /* smaller height for phones */
+  }
+}
 /* BACKGROUND IMAGE */
-.bgBox img {
+.bg-box img {
   width: 100%;
-  height: 100vh;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
+  height: auto; /* maintain aspect ratio */
+  object-fit: cover; /* cover the container */
+  display: block;
 }
 
 .sliderItem {
@@ -38,6 +55,7 @@
   bottom: 0;
 }
 
+/* Default for large screens */
 .textBox {
   direction: rtl;
   position: absolute;
@@ -46,6 +64,24 @@
   transform: translate(-50%, -50%);
   color: #fff;
   max-width: 28%;
+}
+
+/* For tablets and smaller devices (optional) */
+@media (max-width: 1024px) {
+  .textBox {
+    max-width: 40%;
+    right: 40%;
+  }
+}
+
+/* For phones */
+@media (max-width: 768px) {
+  .textBox {
+    top: 60%;
+    right: 10%;
+    transform: translate(-50%, -50%);
+    max-width: 55%;
+  }
 }
 
 .title {

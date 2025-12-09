@@ -1,12 +1,14 @@
-export default function Button({ children, href = "#", className = "", style = {}, onClick }) {
+import { Link } from "react-router-dom";
+
+export default function Button({ children, to = "#", className = "", style = {}, onClick }) {
   return (
-    <a
-      href={href}
+    <Link
+      to={to}
       className={className}
       style={style}
       onClick={onClick}
     >
       {children}
-    </a>
+    </Link>
   );
 }

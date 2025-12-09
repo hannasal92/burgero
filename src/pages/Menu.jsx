@@ -2,6 +2,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AppImage from "../components/common/AppImage";
 import CartIcon from "../components/common/CartIcon";
+import { Link } from 'react-router-dom';
+
 export default function Menu() {
   const [filter, setFilter] = useState("*");
 
@@ -30,7 +32,8 @@ export default function Menu() {
   );
 
   return (
-    <section className="food_section layout_padding-bottom">
+    <>
+      <section className="food_section layout_padding-bottom" style={{padding : "20px"}}>
       <div className="container">
         <div className="heading_container heading_center">
           <h2>התפריט שלנו</h2>
@@ -73,9 +76,9 @@ export default function Menu() {
                       </p>
                       <div className="options">
                         <h6>${item.price}</h6>
-                        <a href="#">
+                        <Link to="#">
                           <CartIcon width={24} height={24} />
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -86,9 +89,11 @@ export default function Menu() {
         </div>
 
         <div className="btn-box">
-          <a href="">View More</a>
+          <Link to="">View More</Link>
         </div>
       </div>
     </section>
+    </>
+
   );
 }

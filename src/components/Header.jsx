@@ -5,6 +5,7 @@ import styles from "./Header.module.css";
 import { useState } from "react";
 import CartIcon from "../components/common/CartIcon";
 import Button from "../components/common/Button";
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,10 +44,8 @@ export default function Header() {
   };
 
   let sliderRef = null;
-
   return (
-    <div className="hero_area">
-      {/* Background Image */}
+      <div className={styles.heroArea}>       {/* Background Image */}
       <div className="bg-box">
         <img src="./src/images/hero-bg.jpg" alt="" />
       </div>
@@ -55,7 +54,7 @@ export default function Header() {
       <header className="header_section">
         <div className="container">
           <nav className="navbar navbar-expand-lg custom_nav-container">
-            <a className="navbar-brand" href="#"><span>Burgero</span></a>
+            <Link className="navbar-brand" to="/home"><span>Burgero</span></Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -66,21 +65,21 @@ export default function Header() {
 
             <div className={`collapse navbar-collapse ${isOpen ? "show" : ""}`}>
               <ul className="navbar-nav mx-auto">
-                <li className="nav-item active"><a className="nav-link" href="#">בית</a></li>
-                <li className="nav-item"><a className="nav-link" href="#">תפריט</a></li>
-                <li className="nav-item"><a className="nav-link" href="#">עלינו</a></li>
-                <li className="nav-item"><a className="nav-link" href="#">הזמנת שולחן</a></li>
+                <li className="nav-item active"><Link className="nav-link" to="/home">בית</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/menue">תפריט</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/about">עלינו</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/bookTable">הזמנת שולחן</Link></li>
               </ul>
 
            <div className="user_option">
               {/* User Icon */}
-              <a href="#" className="user_link">
+              <Link to="/Login" className="user_link">
                 <i className="fa fa-user"></i>
-              </a>
+              </Link>
 
-               <a className="cart_link" href="#">
+               <Link className="cart_link" to="#">
                 <CartIcon />
-              </a>
+              </Link>
               {/* Search Form */}
               <form className="form-inline">
                 <button className="btn nav_search-btn" type="submit">

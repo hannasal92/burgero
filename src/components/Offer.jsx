@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import CartIcon from "../components/common/CartIcon";
 
 const OfferBox = ({ img, title, discount, buttonText }) => (
@@ -13,10 +14,10 @@ const OfferBox = ({ img, title, discount, buttonText }) => (
           <span>{discount}%</span> הנחה
         </h6>
 
-        <a href="#" className="btn1">
+        <Link to="#" className="btn1">
           {buttonText}
           <CartIcon style={{marginRight:"5px"}}/>
-        </a>
+        </Link>
       </div>
     </div>
   </div>
