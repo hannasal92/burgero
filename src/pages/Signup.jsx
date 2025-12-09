@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Signup() {
   return (
     <div className="page-container">
@@ -79,12 +81,12 @@ export default function Signup() {
                     {/* Already have an account? */}
                     <p style={{ textAlign: "center", marginTop: "15px" }}>
                       כבר יש לך חשבון?{" "}
-                      <a 
-                        href="/login" 
+                      <Link 
+                        to="/login" 
                         style={{ color: "#ffbe33", fontWeight: "bold" }}
                       >
                         התחבר
-                      </a>
+                      </Link>
                     </p>
 
                   </form>
