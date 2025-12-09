@@ -18,7 +18,16 @@ export default function Modal({ show, onClose, children }) {
     overflowY: "auto",
     maxHeight: "90vh",
   };
-
+  const closeButtonStyle = {
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    background: "transparent",
+    border: "none",
+    fontSize: "20px",
+    fontWeight: "bold",
+    cursor: "pointer",
+  };
   const overlayStyle = {
     position: "fixed",
     top: 0,
@@ -50,6 +59,9 @@ export default function Modal({ show, onClose, children }) {
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
+             <button style={closeButtonStyle} onClick={onClose}>
+              &times;
+            </button>
             {children}
           </motion.div>
         </>
