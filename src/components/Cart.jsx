@@ -17,7 +17,7 @@ export default function Cart({
         <>
           <div className="cart-list">
             {cartItems.map((item) => (
-              <div className="cart-item" key={item.id}>
+              <div className="cart-item" key={item.cartId}>
                 
                 <img src={`../src/images/${item.img}`} alt={item.name} className="cart-img" />
 
@@ -28,9 +28,11 @@ export default function Cart({
 
                   {/* QUANTITY */}
                   <div className="quantity-box">
-                    <button onClick={() => onDecrease(item.id)}>-</button>
+                    <button onClick={() => onDecrease(item.cartId)}
+                    disabled={item.quantity === 1}
+                    >-</button>
                     <span>{item.quantity}</span>
-                    <button onClick={() => onIncrease(item.id)}>+</button>
+                    <button onClick={() => onIncrease(item.cartId)}>+</button>
                   </div>
 
                   {/* TEXTAREA FOR NOTES */}
@@ -38,12 +40,12 @@ export default function Cart({
                     className="note-textarea"
                     placeholder="הערות למנה (הוספות/הורדות)"
                     value={item.note || ""}
-                    onChange={(e) => onNoteChange(item.id, e.target.value)}
+                    onChange={(e) => onNoteChange(item.cartId, e.target.value)}
                   ></textarea>
 
                 </div>
 
-                <button className="remove-btn" onClick={() => onRemove(item.id)}>
+                <button className="remove-btn" onClick={() => onRemove(item.cartId)}>
                   ✖
                 </button>
 

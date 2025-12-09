@@ -7,25 +7,31 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
   const addToCart = (item) => {
-    setCart((prev) => [...prev, item]);
+    const uniqueItem = {
+      ...item,
+      cartId: crypto.randomUUID(), // unique id for this cart entry
+      quantity: 1,
+      note: "",
+    };
+    setCart((prev) => [...prev, uniqueItem]);
   };
 
-  const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+  const removeFromCart = (cartId) => {
+    setCart((prev) => prev.filter((item) => item.cartId !== cartId));
   };
 
-  const updateQuantity = (id, quantity) => {
+  const updateQuantity = (cartId, quantity) => {
     setCart((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, quantity } : item
+        item.cartId === cartId ? { ...item, quantity } : item
       )
     );
   };
 
-  const updateNote = (id, note) => {
+  const updateNote = (cartId, note) => {
     setCart((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, note } : item
+        item.cartId === cartId ? { ...item, note } : item
       )
     );
   };

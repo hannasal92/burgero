@@ -7,11 +7,11 @@ export default function CartPage() {
   return (
     <Cart
       cartItems={cart}
-      onIncrease={(id) =>
-        updateQuantity(id, cart.find((item) => item.id === id).quantity + 1)
+      onIncrease={(cartId) =>
+        updateQuantity(cartId, cart.find((item) => item.cartId === cartId).quantity + 1)
       }
-      onDecrease={(id) =>
-        updateQuantity(id, cart.find((item) => item.id === id).quantity - 1)
+      onDecrease={(cartId) =>
+        updateQuantity(cartId, cart.find((item) => item.cartId === cartId).quantity - 1)
       }
       onRemove={removeFromCart}
       onNoteChange={updateNote}
