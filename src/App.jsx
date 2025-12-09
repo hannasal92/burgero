@@ -7,9 +7,16 @@ import './css/style.css';
 import './css/responsive.css';
 import { RouterProvider } from "react-router-dom";
 import router from "./route.jsx";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
-    return <RouterProvider router={router} />;
+    return(
+        <CartProvider>
+            <RouterProvider router={router} />
+        </CartProvider>
+       
+
+    ) 
 
 }
 

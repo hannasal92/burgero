@@ -6,6 +6,8 @@ import About from './pages/About';
 import BookTable from './pages/BookTable';
 import ErrorPage from './pages/Error';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
+import CartPage from './pages/CartPage';
 
 const router = createBrowserRouter([
   // Login is outside RootLayout
@@ -21,6 +23,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: '/login', element: <Login /> },
+      { path: '/signup', element: <Signup /> },
+      { path: '/cart', element: <CartPage /> },
       { path: '/menu', element: <Menu /> },
       { path: '/about', element: <About /> },
       { path: '/bookTable', element: <BookTable /> },

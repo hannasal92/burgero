@@ -6,9 +6,11 @@ import { useState } from "react";
 import CartIcon from "../components/common/CartIcon";
 import Button from "../components/common/Button";
 import { Link } from 'react-router-dom';
+import { useCart } from "../context/useCart";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { getTotal } = useCart();
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -77,8 +79,8 @@ export default function Header() {
                 <i className="fa fa-user"></i>
               </Link>
 
-               <Link className="cart_link" to="#">
-                <CartIcon />
+               <Link className="cart_link" to="/cart">
+                <CartIcon count={getTotal()} />
               </Link>
               {/* Search Form */}
               <form className="form-inline">

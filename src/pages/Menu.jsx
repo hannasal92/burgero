@@ -2,10 +2,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AppImage from "../components/common/AppImage";
 import CartIcon from "../components/common/CartIcon";
-import { Link } from 'react-router-dom';
+import { useCart } from "../context/useCart"; // <-- import your CartContext
 
 export default function Menu() {
   const [filter, setFilter] = useState("*");
+  const { addToCart } = useCart(); // <-- get the addToCart function
 
   const menuItems = [
     { id: 1, category: "pizza", name: "פיצה טעימה", description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר." ,price: 20, img: "f1.png" },
@@ -31,15 +32,17 @@ export default function Menu() {
     (item) => filter === "*" || item.category === filter
   );
 
+  const handleAddToCart = (item) => {
+    addToCart({ ...item, quantity: 1, note: "" }); // add quantity & note fields
+  };
+
   return (
-    <>
-      <section className="food_section layout_padding-bottom" style={{padding : "20px"}}>
+    <section className="food_section layout_padding-bottom" style={{ padding: "20px" }}>
       <div className="container">
         <div className="heading_container heading_center">
           <h2>התפריט שלנו</h2>
         </div>
 
-        {/* Filter menu */}
         <ul className="filters_menu">
           {filters.map((f) => (
             <li
@@ -67,18 +70,19 @@ export default function Menu() {
                 >
                   <div className="box">
                     <div className="img-box">
-                      <AppImage src={`./src/images/${item.img}`} alt={item.name}/>
+                      <AppImage src={`./src/images/${item.img}`} alt={item.name} />
                     </div>
                     <div className="detail-box">
                       <h5>{item.name}</h5>
-                      <p>
-                          {item.description}
-                      </p>
+                      <p>{item.description}</p>
                       <div className="options">
-                        <h6>${item.price}</h6>
-                        <Link to="#">
+                        <h6>{item.price} ₪</h6>
+                        <button
+                          className="add-to-cart-btn"
+                          onClick={() => handleAddToCart(item)}
+                        >
                           <CartIcon width={24} height={24} />
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -87,13 +91,7 @@ export default function Menu() {
             </AnimatePresence>
           </div>
         </div>
-
-        <div className="btn-box">
-          <Link to="">View More</Link>
-        </div>
       </div>
     </section>
-    </>
-
   );
 }
