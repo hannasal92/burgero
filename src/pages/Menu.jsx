@@ -8,17 +8,23 @@ export default function Menu() {
   const [filter, setFilter] = useState("*");
   const { addToCart } = useCart(); // <-- get the addToCart function
   const [addedItem, setAddedItem] = useState(null);
-  const menuItems = [
-    { id: 1, category: "pizza", name: "פיצה טעימה", description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר." ,price: 20, img: "f1.png" },
-    { id: 2, category: "burger", name: "בורגיר טעים",description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר.", price: 75, img: "f2.png" },
-    { id: 3, category: "pizza", name: "פיצה טעימה", description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר.", price: 17, img: "f3.png" },
-    { id: 4, category: "pasta", name: "פאסטה טעימה", description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר.",  price: 18, img: "f4.png" },
-    { id: 5, category: "fries", name: "ציפס", description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר." , price: 10, img: "f5.png" },
-    { id: 6, category: "pizza", name: "פיצה טעימה", description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר.",price: 15, img: "f6.png" },
-    { id: 7, category: "burger", name: "בורגיר טעים", description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר." , price: 12, img: "f7.png" },
-    { id: 8, category: "burger", name: "בורגיר טעים", description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר." , price: 14, img: "f8.png" },
-    { id: 9, category: "pasta", name: "פאסטה טעימה", description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר.", price: 10, img: "f9.png" },
-  ];
+    const additionsList = [
+      { name: "גבינה", price: 5 },
+      { name: "פטריות", price: 7 },
+      { name: "בשר", price: 5 },
+    ];
+
+const menuItems = [
+  { id: 1, category: "pizza", name: "פיצה טעימה", description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר.", price: 20, img: "f1.png", additions: additionsList },
+  { id: 2, category: "burger", name: "בורגיר טעים", description: "הבשר שלנו עסיסי וטעים, עם תוספות איכותיות.", price: 75, img: "f2.png", additions: additionsList },
+  { id: 3, category: "pizza", name: "פיצה טעימה", description: "פיצה ביתית עם רוטב עשיר וגבינה נמסה.", price: 17, img: "f3.png", additions: additionsList },
+  { id: 4, category: "pasta", name: "פאסטה טעימה", description: "פסטה טרייה עם רוטב עשיר.", price: 18, img: "f4.png", additions: additionsList },
+  { id: 5, category: "fries", name: "ציפס", description: "צ'יפס פריך וזהוב.", price: 10, img: "f5.png", additions: additionsList },
+  { id: 6, category: "pizza", name: "פיצה טעימה", description: "פיצה ביתית טעימה במיוחד.", price: 15, img: "f6.png", additions: additionsList },
+  { id: 7, category: "burger", name: "בורגיר טעים", description: "בשר איכותי עם תוספות.", price: 12, img: "f7.png", additions: additionsList },
+  { id: 8, category: "burger", name: "בורגיר טעים", description: "בשר עסיסי עם גבינה נמסה.", price: 14, img: "f8.png", additions: additionsList },
+  { id: 9, category: "pasta", name: "פאסטה טעימה", description: "פסטה טעימה עם רוטב ביתי.", price: 10, img: "f9.png", additions: additionsList },
+];
 
   const filters = [
     { label: "הכל", value: "*" },
@@ -74,7 +80,7 @@ return (
                     <div className="img-box">
                       <AppImage src={`./src/images/${item.img}`} alt={item.name} />
                     </div>
-                    <div className="detail-box">
+                    <div className="detail-box" style={{height : "200px"}}>
                       <h5>{item.name}</h5>
                       <p>{item.description}</p>
                       <div className="options">

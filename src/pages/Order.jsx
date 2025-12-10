@@ -1,3 +1,4 @@
+// src/pages/Orders.jsx
 import { useState } from "react";
 
 export default function Orders() {
@@ -5,7 +6,7 @@ export default function Orders() {
   const [orders] = useState([
     {
       _id: "1",
-      date: "2025-12-10T14:32:00",
+      date: "2025-12-10T14:32:00", // ISO string
       paymentMethod: "Credit Card", // added payment method
       products: [
         {
@@ -28,7 +29,7 @@ export default function Orders() {
     {
       _id: "2",
       date: "2025-12-11T09:15:00",
-      paymentMethod: "Cash",
+      paymentMethod: "Credit Card", // added payment method
       products: [
         {
           name: "Veggie Pizza",
@@ -50,7 +51,7 @@ export default function Orders() {
     {
       _id: "3",
       date: "2025-12-12T18:50:00",
-      paymentMethod: "Credit Card",
+      paymentMethod: "Credit Card", // added payment method
       products: [
         {
           name: "Chicken Wings",
@@ -150,18 +151,6 @@ export default function Orders() {
                 }}
               >
                 Total: ₪{order.totalPrice.toFixed(2)}
-              </div>
-
-              <div
-                style={{
-                  textAlign: "right",
-                  fontWeight: "bold",
-                  fontSize: "1rem",
-                  marginTop: "5px",
-                  color: "#555",
-                }}
-              >
-                Payment: {order.paymentMethod}
               </div>
             </div>
           );

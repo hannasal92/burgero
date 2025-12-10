@@ -12,7 +12,6 @@ export function CartProvider({ children }) {
       cartId: crypto.randomUUID(), // unique id for this cart entry
       quantity: 1,
       note: "",
-      additions: [], // <-- initialize additions array
     };
     setCart((prev) => [...prev, uniqueItem]);
   };
@@ -36,13 +35,18 @@ export function CartProvider({ children }) {
       )
     );
   };
-
-  // NEW: update additions for a specific cart item
-  const updateAdditions = (cartId, additions) => {
+  const updateAddition = (cartId, additionName, price, selected) => {
     setCart((prev) =>
-      prev.map((item) =>
-        item.cartId === cartId ? { ...item, additions } : item
-      )
+      prev.map((item) => {
+        if (item.cartId !== cartId) return item;
+
+        // If item has additions
+        const newAdditions = item.additions?.map((a) =>
+          a.name === additionName ? { ...a, selected } : a
+        );
+
+        return { ...item, additions: newAdditions };
+      })
     );
   };
 
@@ -50,17 +54,10 @@ export function CartProvider({ children }) {
     return cart.reduce((sum, item) => sum + item.quantity, 0);
   };
 
+  
   return (
     <CartContext.Provider
-      value={{
-        cart,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
-        updateNote,
-        updateAdditions, // <-- provide this to components
-        getTotal,
-      }}
+      value={{ cart, addToCart, removeFromCart, updateQuantity, updateNote, updateAddition, getTotal }}
     >
       {children}
     </CartContext.Provider>
