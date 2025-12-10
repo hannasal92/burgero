@@ -52,7 +52,7 @@ export default function Cart({
                                 onChange={(e) =>
                                   onAddAddition(item.cartId, a.name, a.price, e.target.checked)
                                 }
-                                style={{ marginRight: "5px" }}
+                                style={{ margin: "5px" }}
                               />
                               {a.name} (+₪{a.price})
                             </label>
