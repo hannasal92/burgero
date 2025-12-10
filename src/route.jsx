@@ -8,8 +8,17 @@ import ErrorPage from './pages/Error';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import CartPage from './pages/CartPage';
-
+import Orders from './pages/Order';
+import PrivateRoute from './routes/PrivateRoute';
 const router = createBrowserRouter([
+  {
+    path: "/orders",
+    element: <PrivateRoute />, // protects child routes
+    children: [
+      { path: "/orders", element: <Orders /> },
+      // add more protected routes here
+    ],
+  },
   // Login is outside RootLayout
   {
     path: '/home',

@@ -6,8 +6,10 @@ import CartIcon from "../components/common/CartIcon";
 import Button from "../components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/useCart";
-
+import UserDropdown from "./common/UserDropDown";
+import { useAuth } from "../context/AuthContext";
 export default function Header() {
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const { getTotal } = useCart();
   const navigate = useNavigate();
@@ -42,13 +44,22 @@ export default function Header() {
                         <li className="nav-item"><Link className="nav-link" to="/menu">תפריט</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/about">עלינו</Link></li>
                         <li className="nav-item"><Link className="nav-link" to="/bookTable">הזמנת שולחן</Link></li>
+                        {/* Only show login if user is NOT logged in */}
+                        {!user && (
+                          <li className="nav-item">
+                            <Link className="nav-link" to="/login">להתחבר למערכת</Link>
+                          </li>
+                        )}
+                        {user && (
+                          <li className="nav-item">
+                            <Link className="nav-link" to="/orders">ההזמנמות שלך</Link>
+                          </li>
+                      )}
                       </ul>
         
                    <div className="user_option">
                       {/* User Icon */}
-                      <Link to="/Login" className="user_link">
-                        <i className="fa fa-user"></i>
-                      </Link>
+                       <UserDropdown />
         
                        <Link className="cart_link" to="/cart">
                         <CartIcon count={getTotal()} />

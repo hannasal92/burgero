@@ -8,16 +8,16 @@ import './css/responsive.css';
 import { RouterProvider } from "react-router-dom";
 import router from "./route.jsx";
 import { CartProvider } from "./context/CartContext";
+import { AuthProvider } from "./context/AuthContext"; // import your AuthProvider
 
 function App() {
-    return(
-        <CartProvider>
-            <RouterProvider router={router} />
-        </CartProvider>
-       
-
-    ) 
-
+    return (
+        <AuthProvider>
+            <CartProvider>
+                <RouterProvider router={router} />
+            </CartProvider>
+        </AuthProvider>
+    );
 }
 
 export default App;

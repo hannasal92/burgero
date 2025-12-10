@@ -1192,4 +1192,11 @@ a:focus {
 .add-to-cart-btn svg {
   fill: #000; /* Icon color, optional */
 }
+.error {
+  color: red;
+  font-size: 14px;
+  margin: 5px 0 10px;
+}
+
+
 /*# sourceMappingURL=style.css.map */
