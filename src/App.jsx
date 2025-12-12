@@ -5,17 +5,22 @@ import './css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/style.css';
 import './css/responsive.css';
+
 import { RouterProvider } from "react-router-dom";
 import router from "./route.jsx";
+
 import { CartProvider } from "./context/CartContext";
-import { AuthProvider } from "./context/AuthContext"; // import your AuthProvider
+import { AuthProvider } from "./context/AuthContext";
+import { ProductProvider } from "./context/ProductContext"; // <-- import ProductProvider
 
 function App() {
     return (
         <AuthProvider>
-            <CartProvider>
-                <RouterProvider router={router} />
-            </CartProvider>
+            <ProductProvider>      {/* <-- Add here */}
+                <CartProvider>
+                    <RouterProvider router={router} />
+                </CartProvider>
+            </ProductProvider>
         </AuthProvider>
     );
 }

@@ -1,30 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AppImage from "../components/common/AppImage";
 import CartIcon from "../components/common/CartIcon";
-import { useCart } from "../context/useCart"; // <-- import your CartContext
+import { useCart } from "../context/useCart";
+import { useProducts } from "../context/useProduct";
+
 
 export default function Menu() {
   const [filter, setFilter] = useState("*");
-  const { addToCart } = useCart(); // <-- get the addToCart function
+  // const [menuItems, setMenuItems] = useState([]); // <-- products from DB
+  const { addToCart } = useCart();
+  const { products } = useProducts();
   const [addedItem, setAddedItem] = useState(null);
-    const additionsList = [
-      { name: "גבינה", price: 5 },
-      { name: "פטריות", price: 7 },
-      { name: "בשר", price: 5 },
-    ];
 
-const menuItems = [
-  { id: 1, category: "pizza", name: "פיצה טעימה", description: "הפיצה שלנו טרייה במיוחד, עם גבינה נמתחת, רוטב עשיר ועשוי בית, בצק אוורירי ותוספות איכותיות שיוצרות טעם מושלם וממכר.", price: 20, img: "f1.png", additions: additionsList },
-  { id: 2, category: "burger", name: "בורגיר טעים", description: "הבשר שלנו עסיסי וטעים, עם תוספות איכותיות.", price: 75, img: "f2.png", additions: additionsList },
-  { id: 3, category: "pizza", name: "פיצה טעימה", description: "פיצה ביתית עם רוטב עשיר וגבינה נמסה.", price: 17, img: "f3.png", additions: additionsList },
-  { id: 4, category: "pasta", name: "פאסטה טעימה", description: "פסטה טרייה עם רוטב עשיר.", price: 18, img: "f4.png", additions: additionsList },
-  { id: 5, category: "fries", name: "ציפס", description: "צ'יפס פריך וזהוב.", price: 10, img: "f5.png", additions: additionsList },
-  { id: 6, category: "pizza", name: "פיצה טעימה", description: "פיצה ביתית טעימה במיוחד.", price: 15, img: "f6.png", additions: additionsList },
-  { id: 7, category: "burger", name: "בורגיר טעים", description: "בשר איכותי עם תוספות.", price: 12, img: "f7.png", additions: additionsList },
-  { id: 8, category: "burger", name: "בורגיר טעים", description: "בשר עסיסי עם גבינה נמסה.", price: 14, img: "f8.png", additions: additionsList },
-  { id: 9, category: "pasta", name: "פאסטה טעימה", description: "פסטה טעימה עם רוטב ביתי.", price: 10, img: "f9.png", additions: additionsList },
-];
 
   const filters = [
     { label: "הכל", value: "*" },
@@ -34,17 +22,17 @@ const menuItems = [
     { label: "מתוגנים", value: "fries" },
   ];
 
-  const filteredItems = menuItems.filter(
+  const filteredItems = products.filter(
     (item) => filter === "*" || item.category === filter
   );
 
   const handleAddToCart = (item) => {
-    addToCart({ ...item, quantity: 1, note: "" }); // add quantity & note fields
-    setAddedItem(item.name); // set the toast message
+    addToCart({ ...item, quantity: 1, note: "" });
+    setAddedItem(item.name);
     setTimeout(() => setAddedItem(null), 2000);
   };
 
-return (
+  return (
     <section className="food_section layout_padding-bottom" style={{ padding: "20px" }}>
       <div className="container">
         <div className="heading_container heading_center">
@@ -68,7 +56,7 @@ return (
             <AnimatePresence>
               {filteredItems.map((item) => (
                 <motion.div
-                  key={item.id}
+                  key={item._id}
                   layout
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -78,9 +66,9 @@ return (
                 >
                   <div className="box">
                     <div className="img-box">
-                      <AppImage src={`./src/images/${item.img}`} alt={item.name} />
+                      <AppImage src={`./src/images/${item.image}`} alt={item.name} />
                     </div>
-                    <div className="detail-box" style={{height : "200px"}}>
+                    <div className="detail-box" style={{ height: "200px" }}>
                       <h5>{item.name}</h5>
                       <p>{item.description}</p>
                       <div className="options">
@@ -100,7 +88,6 @@ return (
           </div>
         </div>
 
-        {/* Toast Notification */}
         <AnimatePresence>
           {addedItem && (
             <motion.div
@@ -112,7 +99,7 @@ return (
                 position: "fixed",
                 bottom: 20,
                 right: 20,
-                background: "#FFD700", // yellow
+                background: "#FFD700",
                 color: "#000",
                 padding: "12px 20px",
                 borderRadius: "12px",
