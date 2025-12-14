@@ -107,7 +107,7 @@ const updateAddition = (cartId, additionName, price, selected) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, updateQuantity, updateNote, updateAddition, getTotal, calculateCartTotal, calculateItemTotal }}
+      value={{ cart, setCart, addToCart, removeFromCart, updateQuantity, updateNote, updateAddition, getTotal, calculateCartTotal, calculateItemTotal }}
     >
       {children}
     </CartContext.Provider>

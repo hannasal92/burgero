@@ -20,7 +20,7 @@ export default function CartPage() {
 
   const handlePaymentSubmit = (e) => {
     e.preventDefault();
-    alert("תודה! התשלום בוצע בהצלחה.");
+    // alert("תודה! התשלום בוצע בהצלחה.");
     setShowPayment(false);
   };
 

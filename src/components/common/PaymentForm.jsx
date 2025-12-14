@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { paymentApi } from "../../api/paymentApi";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../../context/useCart";
 
 export default function PaymentForm({ cart, total, onSuccess }) {
   const [loading, setLoading] = useState(false);
+  const { setCart } = useCart();
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -26,6 +28,7 @@ export default function PaymentForm({ cart, total, onSuccess }) {
       setTimeout(() => {
         navigate("/orders");
       }, 2000);
+      setCart([])
       if (onSuccess) onSuccess(res.data);
     } catch (err) {
       console.error("Payment failed:", err);
