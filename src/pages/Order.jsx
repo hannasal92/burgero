@@ -2,155 +2,258 @@
 import { useState } from "react";
 
 export default function Orders() {
-  // MOCK DATA
   const [orders] = useState([
     {
-      _id: "1",
-      date: "2025-12-10T14:32:00", // ISO string
-      paymentMethod: "Credit Card", // added payment method
-      products: [
+      _id: "693ebf0537fcd6f942fb1ea2",
+      paymentType: "creditCard",
+      status: "pending",
+      total: 60,
+      createdAt: "2025-12-14T15:43:33.125+02:00",
+      items: [
         {
-          name: "Classic Burger",
-          description: "Juicy beef patty with cheese and lettuce",
-          imageUrl: "./src/images/f1.png",
-          quantity: 2,
-          price: 25,
-        },
-        {
-          name: "French Fries",
-          description: "Crispy golden fries",
-          imageUrl: "./src/images/f2.png",
+          productId: "693ac653a251d4e2ac04ac41",
+          imageUrl : "./src/images/f2.png",
+          name: "בורגר בקר קלאסי",
+          price: 55,
           quantity: 1,
-          price: 10,
+          note: "1234241",
+          totalPrice: 60,
+          selectedAdditions: [
+            { name: "Cheese", price: 5 },
+          ],
+        },
+               {
+          productId: "693ac653a251d4e2ac04ac41",
+          imageUrl : "./src/images/f2.png",
+          name: "בורגר בקר קלאסי",
+          price: 55,
+          quantity: 1,
+          note: "1234241",
+          totalPrice: 60,
+          selectedAdditions: [
+            { name: "Cheese", price: 5 },
+          ],
         },
       ],
-      totalPrice: 60,
     },
     {
-      _id: "2",
-      date: "2025-12-11T09:15:00",
-      paymentMethod: "Credit Card", // added payment method
-      products: [
+      _id: "693ec10837fcd6f942fb1ebb",
+      paymentType: "creditCard",
+      status: "pending",
+      total: 55,
+      createdAt: "2025-12-14T15:52:08.853+02:00",
+      items: [
         {
-          name: "Veggie Pizza",
-          description: "Delicious pizza with fresh vegetables",
-          imageUrl: "./src/images/f3.png",
+          productId: "693ac653a251d4e2ac04ac41",
+          name: "בורגר בקר קלאסי",
+          imageUrl : "./src/images/f2.png",
+          price: 55,
           quantity: 1,
-          price: 35,
-        },
-        {
-          name: "Coke",
-          description: "Refreshing drink",
-          imageUrl: "./src/images/f4.png",
-          quantity: 2,
-          price: 5,
+          note: "1212",
+          totalPrice: 55,
+          selectedAdditions: [],
         },
       ],
-      totalPrice: 45,
-    },
-    {
-      _id: "3",
-      date: "2025-12-12T18:50:00",
-      paymentMethod: "Credit Card", // added payment method
-      products: [
-        {
-          name: "Chicken Wings",
-          description: "Spicy and crispy",
-          imageUrl: "./src/images/f1.png",
-          quantity: 4,
-          price: 8,
-        },
-      ],
-      totalPrice: 32,
     },
   ]);
 
-  return (
-    <div className="page-container" style={{ padding: "50px 20px" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "30px" }}>הזמנות שלי</h2>
-
-      <div
-        className="orders-list"
-        style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+return (
+    <div style={{ padding: "50px 20px", background: "#f7f7f7", minHeight: "100vh" }}>
+      <h2
+        style={{
+          textAlign: "center",
+          marginBottom: "40px",
+          fontWeight: "800",
+          letterSpacing: "1px",
+        }}
       >
+        ההזמנות שלי 🍔
+      </h2>
+
+      <div style={{ maxWidth: "900px", margin: "0 auto" }}>
         {orders.map((order) => {
-          const formattedDate = new Date(order.date).toLocaleString("he-IL", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-          });
+          const formattedDate = new Date(order.createdAt).toLocaleString("he-IL");
 
           return (
             <div
               key={order._id}
               style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                border: "1px solid #ddd",
-                padding: "15px",
-                borderRadius: "10px",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
-                backgroundColor: "#fff",
+                background: "#fff",
+                borderRadius: "16px",
+                padding: "20px",
+                marginBottom: "25px",
+                boxShadow: "0 8px 20px rgba(0,0,0,0.06)",
               }}
             >
-              <h4 style={{ marginBottom: "10px" }}>
-                Order #{order._id} - {formattedDate}
-              </h4>
+              {/* HEADER */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "15px",
+              }}
+            >
+              {/* LEFT */}
+              <div>
+                <div style={{ fontWeight: "700", fontSize: "1.1rem" }}>
+                  הזמנה #{order._id.slice(-6)}
+                </div>
+                <div style={{ fontSize: "0.9rem", color: "#777" }}>
+                  {formattedDate}
+                </div>
+              </div>
 
-              {order.products.map((product, idx) => (
+              {/* RIGHT — STATUS + PAYMENT */}
+              <div
+                style={{
+                  display: "flex",
+                  gap: "8px",
+                  alignItems: "center",
+                }}
+              >
+                {/* STATUS */}
+                <span
+                  style={{
+                    padding: "6px 12px",
+                    borderRadius: "20px",
+                    background: "#fff3cd",
+                    color: "#856404",
+                    fontSize: "0.85rem",
+                    fontWeight: "600",
+                  }}
+                >
+                  ⏳ {order.status}
+                </span>
+
+                {/* PAYMENT TYPE */}
+                <span
+                  style={{
+                    padding: "6px 12px",
+                    borderRadius: "20px",
+                    background: "#e6f4ea",
+                    color: "#2e7d32",
+                    fontSize: "0.85rem",
+                    fontWeight: "600",
+                  }}
+                >
+                  💳 {order.paymentType}
+                </span>
+              </div>
+            </div>
+              {/* ITEMS */}
+              {order.items.map((item, idx) => (
                 <div
                   key={idx}
                   style={{
                     display: "flex",
-                    alignItems: "center",
-                    gap: "20px",
-                    padding: "10px 0",
+                    gap: "15px",
+                    padding: "15px 0",
                     borderBottom:
-                      idx !== order.products.length - 1 ? "1px solid #eee" : "none",
+                      idx !== order.items.length - 1
+                        ? "1px solid #eee"
+                        : "none",
                   }}
                 >
+                  {/* IMAGE */}
                   <img
-                    src={product.imageUrl}
-                    alt={product.name}
+                    src={item.imageUrl || "/images/placeholder.png"}
+                    alt={item.name}
                     style={{
-                      width: "100px",
-                      height: "100px",
+                      width: "120px",
+                      height: "90px",
+                      borderRadius: "12px",
                       objectFit: "cover",
-                      borderRadius: "8px",
+                      background: "#fafafa",
                     }}
                   />
+
+                  {/* DETAILS */}
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: "600", fontSize: "1.1rem" }}>
-                      {product.name}
+                    <div style={{ fontWeight: "700", fontSize: "1rem" }}>
+                      {item.name}
                     </div>
+
                     <div
                       style={{
                         fontSize: "0.9rem",
-                        color: "#666",
-                        marginTop: "5px",
+                        fontWeight: "600",
+                        marginTop: "4px",
                       }}
                     >
-                      {product.description}
+                      {item.quantity} × ₪{item.price}
                     </div>
-                    <div style={{ marginTop: "10px", fontWeight: "bold" }}>
-                      כמות: {product.quantity} | מחיר ליחידה: ₪{product.price}
-                    </div>
+
+                    {/* ADDITIONS */}
+                    {item.selectedAdditions.length > 0 && (
+                      <div
+                        style={{
+                          marginTop: "6px",
+                          fontSize: "0.85rem",
+                          color: "#555",
+                        }}
+                      >
+                        תוספות:
+                        <ul style={{ margin: "4px 0 0 18px" }}>
+                          {item.selectedAdditions.map((add, i) => (
+                            <li key={i}>
+                              {add.name} (+₪{add.price})
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* NOTE */}
+                    {item.note && (
+                      <div
+                        style={{
+                          marginTop: "6px",
+                          fontSize: "0.8rem",
+                          color: "#777",
+                        }}
+                      >
+                        הערה: {item.note}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* ITEM TOTAL */}
+                  <div
+                    style={{
+                      fontWeight: "700",
+                      color: "#ff9800",
+                      alignSelf: "center",
+                    }}
+                  >
+                    ₪{item.totalPrice}
                   </div>
                 </div>
               ))}
 
+              {/* TOTAL */}
               <div
                 style={{
-                  textAlign: "right",
-                  fontWeight: "bold",
-                  fontSize: "1.1rem",
-                  marginTop: "10px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginTop: "20px",
+                  paddingTop: "15px",
+                  borderTop: "2px dashed #eee",
                 }}
               >
-                Total: ₪{order.totalPrice.toFixed(2)}
+                <span style={{ fontSize: "1rem", fontWeight: "700" }}>
+                  סה״כ לתשלום
+                </span>
+                <span
+                  style={{
+                    fontSize: "1.3rem",
+                    fontWeight: "800",
+                    color: "#ff9800",
+                  }}
+                >
+                  ₪{order.total}
+                </span>
               </div>
             </div>
           );
