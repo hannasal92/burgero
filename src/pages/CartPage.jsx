@@ -5,8 +5,8 @@ import Modal from "../components/common/Modal";
 import PaymentForm from "../components/common/PaymentForm";
 
 export default function CartPage() {
-  const { cart, updateQuantity, removeFromCart, updateNote, updateAddition} = useCart();
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const { cart, updateQuantity, removeFromCart, updateNote, updateAddition, calculateCartTotal} = useCart();
+  //const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const [showPayment, setShowPayment] = useState(false);
 
   const handlePayClick = () => {
@@ -14,6 +14,7 @@ export default function CartPage() {
       alert("העגלה ריקה! אנא הוסף מוצרים לפני התשלום.");
       return;
     }
+    console.log(cart)
     setShowPayment(true);
   };
 
@@ -59,7 +60,7 @@ export default function CartPage() {
 
       {/* Modal */}
       <Modal show={showPayment} onClose={() => setShowPayment(false)}>
-        <PaymentForm total={total} onSubmit={handlePaymentSubmit} />
+        <PaymentForm total={calculateCartTotal()} onSubmit={handlePaymentSubmit} />
       </Modal>
     </div>
   );

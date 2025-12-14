@@ -1,3 +1,5 @@
+import { useCart } from "../context/useCart";
+
 export default function Cart({
   cartItems = [],
   onIncrease,
@@ -6,6 +8,8 @@ export default function Cart({
   onNoteChange,
   onAddAddition, // new prop
 }) {
+    const { calculateItemTotal} = useCart();
+  
   return (
     <div className="cart-page">
       <h2 className="cart-title">העגלה שלי</h2>
@@ -16,8 +20,8 @@ export default function Cart({
         <>
           <div className="cart-list">
             {cartItems.map((item) => {
-              const additionsTotal = item.additions?.reduce((sum, a) => sum + (a.selected ? a.price : 0), 0) || 0;
-              const itemTotal = (item.price + additionsTotal) * item.quantity;
+              // const additionsTotal = item.additions?.reduce((sum, a) => sum + (a.selected ? a.price : 0), 0) || 0;
+              // const itemTotal = (item.price + additionsTotal) * item.quantity;
 
               return (
                 <div
@@ -71,7 +75,7 @@ export default function Cart({
                     ></textarea>
 
                     <div style={{ fontWeight: "bold", marginTop: "10px" }}>
-                      סכ״ה: ₪{itemTotal}
+                      סכ״ה: ₪{calculateItemTotal(item)}
                     </div>
                   </div>
 
