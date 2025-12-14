@@ -60,7 +60,7 @@ export default function CartPage() {
 
       {/* Modal */}
       <Modal show={showPayment} onClose={() => setShowPayment(false)}>
-        <PaymentForm total={calculateCartTotal()} onSubmit={handlePaymentSubmit} />
+        <PaymentForm total={calculateCartTotal()} cart={cart} onSubmit={handlePaymentSubmit} />
       </Modal>
     </div>
   );

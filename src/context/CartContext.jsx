@@ -13,6 +13,7 @@ export function CartProvider({ children }) {
       quantity: 1,
       selectedAdditions: [],
       note: "",
+      payType : "cash"
     };
 
     const itemWithTotal = {
@@ -104,7 +105,6 @@ const updateAddition = (cartId, additionName, price, selected) => {
     return cart.reduce((sum, item) => sum + item.quantity, 0);
   };
 
-  
   return (
     <CartContext.Provider
       value={{ cart, addToCart, removeFromCart, updateQuantity, updateNote, updateAddition, getTotal, calculateCartTotal, calculateItemTotal }}

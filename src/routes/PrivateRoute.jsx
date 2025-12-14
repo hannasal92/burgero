@@ -5,9 +5,9 @@ import HeaderSp from "../components/HeaderSp";
 import Footer from "../components/Footer";
 
 export default function PrivateRoute() {
-  const { user } = useAuth();
+  const { accessToken } = useAuth();
 
-  if (!user) return <Navigate to="/login" />;
+  if (!accessToken) return <Navigate to="/login" />;
 
   return (
     <>

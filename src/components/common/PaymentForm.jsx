@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { paymentApi } from "../../api/paymentApi";
+import { useNavigate } from "react-router-dom";
 
 export default function PaymentForm({ cart, total, onSuccess }) {
   const [loading, setLoading] = useState(false);
-
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // Gather form data
     const formData = new FormData(e.target);
     const paymentDetails = {
       cardName: formData.get("cardName"),
@@ -19,10 +20,13 @@ export default function PaymentForm({ cart, total, onSuccess }) {
     };
 
     try {
-      // Send cart, total, and payment details to backend
-      const res = await paymentApi.pay(cart, total, paymentDetails);
+      const res = await paymentApi.pay(cart, total, paymentDetails, "creditCard");
       console.log("Payment success:", res.data);
-      if (onSuccess) onSuccess(res.data); // callback after successful payment
+      setPaymentSuccess(true);
+      setTimeout(() => {
+        navigate("/orders");
+      }, 2000);
+      if (onSuccess) onSuccess(res.data);
     } catch (err) {
       console.error("Payment failed:", err);
       alert("Payment failed. Please try again.");
@@ -90,10 +94,40 @@ export default function PaymentForm({ cart, total, onSuccess }) {
           borderRadius: "5px",
           width: "100%",
           fontWeight: "bold",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "10px",
         }}
       >
-        {loading ? "מעבד..." : `שלם עכשיו (${total} ₪)`}
+        {loading && !paymentSuccess &&(
+          <div
+            style={{
+              border: "2px solid #fff",
+              borderTop: "2px solid rgba(255,255,255,0.3)",
+              borderRadius: "50%",
+              width: "16px",
+              height: "16px",
+              animation: "spin 1s linear infinite",
+            }}
+          />
+        )}
+        {paymentSuccess
+          ? "תשלום בוצע בהצלחה ✅"
+          : loading
+          ? "מעבד..."
+          : `שלם עכשיו (${total} ₪)`}
       </button>
+
+      {/* Spinner animation */}
+      <style>
+        {`
+          @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+          }
+        `}
+      </style>
     </form>
   );
 }
