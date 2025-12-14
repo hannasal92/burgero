@@ -1,66 +1,88 @@
-export default function PaymentForm({ total, onSubmit }) {
+import { useState } from "react";
+import { paymentApi } from "../../api/paymentApi";
+
+export default function PaymentForm({ cart, total, onSuccess }) {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    // Gather form data
+    const formData = new FormData(e.target);
+    const paymentDetails = {
+      cardName: formData.get("cardName"),
+      idNumber: formData.get("idNumber"),
+      cardNumber: formData.get("cardNumber"),
+      expiry: formData.get("expiry"),
+      cvv: formData.get("cvv"),
+    };
+
+    try {
+      // Send cart, total, and payment details to backend
+      const res = await paymentApi.pay(cart, total, paymentDetails);
+      console.log("Payment success:", res.data);
+      if (onSuccess) onSuccess(res.data); // callback after successful payment
+    } catch (err) {
+      console.error("Payment failed:", err);
+      alert("Payment failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
       <h3 style={{ textAlign: "center", marginBottom: "20px" }}>פרטי תשלום</h3>
 
-      <div style={{ marginBottom: "10px" }}>
-        <label>שם בעל הכרטיס</label>
-        <input
-          type="text"
-          required
-          className="form-control"
-          placeholder="שם על הכרטיס"
-        />
-      </div>
-
-
-      <div style={{ marginBottom: "10px" }}>
-        <label>מספר תעודת זהות </label>
-        <input
-          type="text"
-          required
-          className="form-control"
-          placeholder="123456789"
-          maxLength={10} // adjust as needed
-        />
-      </div>
-
-      <div style={{ marginBottom: "10px" }}>
-        <label>מספר כרטיס</label>
-        <input
-          type="text"
-          required
-          className="form-control"
-          placeholder="1234 5678 9012 3456"
-          maxLength={16}
-        />
-      </div>
-
+      <input
+        type="text"
+        name="cardName"
+        placeholder="שם על הכרטיס"
+        required
+        className="form-control"
+        style={{ marginBottom: "10px" }}
+      />
+      <input
+        type="text"
+        name="idNumber"
+        placeholder="מספר תעודת זהות"
+        required
+        maxLength={10}
+        className="form-control"
+        style={{ marginBottom: "10px" }}
+      />
+      <input
+        type="text"
+        name="cardNumber"
+        placeholder="מספר כרטיס"
+        required
+        maxLength={16}
+        className="form-control"
+        style={{ marginBottom: "10px" }}
+      />
       <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-        <div style={{ flex: 1 }}>
-          <label>תוקף</label>
-          <input
-            type="text"
-            required
-            className="form-control"
-            placeholder="MM/YY"
-            maxLength={5}
-          />
-        </div>
-        <div style={{ flex: 1 }}>
-          <label>CVV</label>
-          <input
-            type="text"
-            required
-            className="form-control"
-            placeholder="123"
-            maxLength={3}
-          />
-        </div>
+        <input
+          type="text"
+          name="expiry"
+          placeholder="MM/YY"
+          required
+          maxLength={5}
+          className="form-control"
+        />
+        <input
+          type="text"
+          name="cvv"
+          placeholder="CVV"
+          required
+          maxLength={3}
+          className="form-control"
+        />
       </div>
 
       <button
         type="submit"
+        disabled={loading}
         style={{
           padding: "10px 20px",
           backgroundColor: "orange",
@@ -70,7 +92,7 @@ export default function PaymentForm({ total, onSubmit }) {
           fontWeight: "bold",
         }}
       >
-        שלם עכשיו ({total} ₪)
+        {loading ? "מעבד..." : `שלם עכשיו (${total} ₪)`}
       </button>
     </form>
   );
