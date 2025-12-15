@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { orderApi } from "../api/orderApi";
+import Spinner from "../components/common/Spinner";
 
 const ORDER_STATUS_CONFIG = {
   pending: {
@@ -57,13 +58,20 @@ export default function Orders() {
 
   /* -------------------- STATES -------------------- */
 
-  if (loading) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "100px", fontSize: "1.2rem" }}>
-        טוען הזמנות...
-      </div>
-    );
-  }
+    if (loading) {
+      return (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "60vh",
+          }}
+        >
+          <Spinner size={50} />
+        </div>
+      );
+    }
 
   if (error) {
     return (

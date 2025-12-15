@@ -1197,6 +1197,10 @@ a:focus {
   font-size: 14px;
   margin: 5px 0 10px;
 }
-
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /*# sourceMappingURL=style.css.map */
