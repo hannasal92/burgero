@@ -3,9 +3,11 @@ import { paymentApi } from "../../api/paymentApi";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/useCart";
 import Spinner from "../../components/common/Spinner";
+import { useOrders } from "../../context/useOrders";
 
 export default function PaymentForm({ cart, total, onSuccess }) {
   const [loading, setLoading] = useState(false);
+  const { addOrder } = useOrders();
   const { setCart } = useCart();
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ export default function PaymentForm({ cart, total, onSuccess }) {
       if (onSuccess) onSuccess(res.data);
 
       setTimeout(() => {
+        addOrder(res.data.order);
         navigate("/orders");
         setCart([]);
       }, 2000);

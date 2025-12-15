@@ -11,14 +11,17 @@ import router from "./route.jsx";
 
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
-import { ProductProvider } from "./context/ProductContext"; // <-- import ProductProvider
+import { ProductProvider } from "./context/ProductContext";
+import { OrderProvider } from "./context/OrderContext"; // <-- import OrderProvider
 
 function App() {
     return (
         <AuthProvider>
-            <ProductProvider>      {/* <-- Add here */}
+            <ProductProvider>
                 <CartProvider>
-                    <RouterProvider router={router} />
+                    <OrderProvider> {/* <-- Wrap here */}
+                        <RouterProvider router={router} />
+                    </OrderProvider>
                 </CartProvider>
             </ProductProvider>
         </AuthProvider>

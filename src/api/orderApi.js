@@ -1,8 +1,7 @@
-// api/paymentApi.js
+// src/api/orderApi.js
 import axiosClient from "./axiosClient";
 
 export const orderApi = {
-  get: () => {
-    return axiosClient.get("/order/userOrders");
-  },
+  get: (page = 1, limit = 5) =>
+    axiosClient.get(`/order/userOrders?page=${page}&limit=${limit}`),
 };
