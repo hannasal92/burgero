@@ -1,63 +1,79 @@
-// src/pages/Orders.jsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { orderApi } from "../api/orderApi";
+
+const ORDER_STATUS_CONFIG = {
+  pending: {
+    label: "ממתין",
+    bg: "#fff3cd",
+    color: "#856404",
+    icon: "⏳",
+  },
+  paid: {
+    label: "שולם",
+    bg: "#e6f4ea",
+    color: "#2e7d32",
+    icon: "✅",
+  },
+  preparing: {
+    label: "בהכנה",
+    bg: "#e3f2fd",
+    color: "#1565c0",
+    icon: "👨‍🍳",
+  },
+  delivered: {
+    label: "נמסר",
+    bg: "#ede7f6",
+    color: "#5e35b1",
+    icon: "🚚",
+  },
+  canceled: {
+    label: "בוטל",
+    bg: "#fdecea",
+    color: "#c62828",
+    icon: "❌",
+  },
+};
 
 export default function Orders() {
-  const [orders] = useState([
-    {
-      _id: "693ebf0537fcd6f942fb1ea2",
-      paymentType: "creditCard",
-      status: "pending",
-      total: 60,
-      createdAt: "2025-12-14T15:43:33.125+02:00",
-      items: [
-        {
-          productId: "693ac653a251d4e2ac04ac41",
-          imageUrl : "./src/images/f2.png",
-          name: "בורגר בקר קלאסי",
-          price: 55,
-          quantity: 1,
-          note: "1234241",
-          totalPrice: 60,
-          selectedAdditions: [
-            { name: "Cheese", price: 5 },
-          ],
-        },
-               {
-          productId: "693ac653a251d4e2ac04ac41",
-          imageUrl : "./src/images/f2.png",
-          name: "בורגר בקר קלאסי",
-          price: 55,
-          quantity: 1,
-          note: "1234241",
-          totalPrice: 60,
-          selectedAdditions: [
-            { name: "Cheese", price: 5 },
-          ],
-        },
-      ],
-    },
-    {
-      _id: "693ec10837fcd6f942fb1ebb",
-      paymentType: "creditCard",
-      status: "pending",
-      total: 55,
-      createdAt: "2025-12-14T15:52:08.853+02:00",
-      items: [
-        {
-          productId: "693ac653a251d4e2ac04ac41",
-          name: "בורגר בקר קלאסי",
-          imageUrl : "./src/images/f2.png",
-          price: 55,
-          quantity: 1,
-          note: "1212",
-          totalPrice: 55,
-          selectedAdditions: [],
-        },
-      ],
-    },
-  ]);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-return (
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const res = await orderApi.get();
+        setOrders(res.data || []);
+      } catch (err) {
+        console.error("Failed to fetch orders:", err);
+        setError("לא ניתן לטעון הזמנות");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  /* -------------------- STATES -------------------- */
+
+  if (loading) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "100px", fontSize: "1.2rem" }}>
+        טוען הזמנות...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "100px", color: "red" }}>
+        {error}
+      </div>
+    );
+  }
+
+  return (
     <div style={{ padding: "50px 20px", background: "#f7f7f7", minHeight: "100vh" }}>
       <h2
         style={{
@@ -71,8 +87,31 @@ return (
       </h2>
 
       <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+        {/* EMPTY STATE */}
+        {orders.length === 0 && (
+          <div
+            style={{
+              background: "#fff",
+              borderRadius: "16px",
+              padding: "60px 20px",
+              textAlign: "center",
+              boxShadow: "0 8px 20px rgba(0,0,0,0.06)",
+            }}
+          >
+            <div style={{ fontSize: "3rem", marginBottom: "15px" }}>🛒</div>
+            <h3 style={{ marginBottom: "10px" }}>אין הזמנות עדיין</h3>
+            <p style={{ color: "#777" }}>
+              ברגע שתבצע הזמנה – היא תופיע כאן
+            </p>
+          </div>
+        )}
+
+        {/* ORDERS */}
         {orders.map((order) => {
           const formattedDate = new Date(order.createdAt).toLocaleString("he-IL");
+          const status =
+            ORDER_STATUS_CONFIG[order.status] ||
+            ORDER_STATUS_CONFIG.pending;
 
           return (
             <div
@@ -86,61 +125,55 @@ return (
               }}
             >
               {/* HEADER */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "15px",
-              }}
-            >
-              {/* LEFT */}
-              <div>
-                <div style={{ fontWeight: "700", fontSize: "1.1rem" }}>
-                  הזמנה #{order._id.slice(-6)}
-                </div>
-                <div style={{ fontSize: "0.9rem", color: "#777" }}>
-                  {formattedDate}
-                </div>
-              </div>
-
-              {/* RIGHT — STATUS + PAYMENT */}
               <div
                 style={{
                   display: "flex",
-                  gap: "8px",
+                  justifyContent: "space-between",
                   alignItems: "center",
+                  marginBottom: "15px",
                 }}
               >
-                {/* STATUS */}
-                <span
-                  style={{
-                    padding: "6px 12px",
-                    borderRadius: "20px",
-                    background: "#fff3cd",
-                    color: "#856404",
-                    fontSize: "0.85rem",
-                    fontWeight: "600",
-                  }}
-                >
-                  ⏳ {order.status}
-                </span>
+                <div>
+                  <div style={{ fontWeight: "700", fontSize: "1.1rem" }}>
+                    הזמנה #{order._id.slice(-6)}
+                  </div>
+                  <div style={{ fontSize: "0.9rem", color: "#777" }}>
+                    {formattedDate}
+                  </div>
+                </div>
 
-                {/* PAYMENT TYPE */}
-                <span
-                  style={{
-                    padding: "6px 12px",
-                    borderRadius: "20px",
-                    background: "#e6f4ea",
-                    color: "#2e7d32",
-                    fontSize: "0.85rem",
-                    fontWeight: "600",
-                  }}
-                >
-                  💳 {order.paymentType}
-                </span>
+                <div style={{ display: "flex", gap: "8px" }}>
+                  <span
+                    style={{
+                      padding: "6px 12px",
+                      borderRadius: "20px",
+                      background: status.bg,
+                      color: status.color,
+                      fontSize: "0.85rem",
+                      fontWeight: "600",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
+                    }}
+                  >
+                    {status.icon} {status.label}
+                  </span>
+
+                  <span
+                    style={{
+                      padding: "6px 12px",
+                      borderRadius: "20px",
+                      background: "#e6f4ea",
+                      color: "#2e7d32",
+                      fontSize: "0.85rem",
+                      fontWeight: "600",
+                    }}
+                  >
+                    💳 {order.paymentType}
+                  </span>
+                </div>
               </div>
-            </div>
+
               {/* ITEMS */}
               {order.items.map((item, idx) => (
                 <div
@@ -155,44 +188,28 @@ return (
                         : "none",
                   }}
                 >
-                  {/* IMAGE */}
                   <img
-                    src={item.imageUrl || "/images/placeholder.png"}
+                    src={`../src/images/${item.imageUrl}`}
                     alt={item.name}
                     style={{
-                      width: "120px",
-                      height: "90px",
+                      width: "130px",
+                      height: "120px",
                       borderRadius: "12px",
                       objectFit: "cover",
-                      background: "#fafafa",
                     }}
                   />
 
-                  {/* DETAILS */}
                   <div style={{ flex: 1 }}>
                     <div style={{ fontWeight: "700", fontSize: "1rem" }}>
                       {item.name}
                     </div>
 
-                    <div
-                      style={{
-                        fontSize: "0.9rem",
-                        fontWeight: "600",
-                        marginTop: "4px",
-                      }}
-                    >
+                    <div style={{ fontWeight: "600", marginTop: "4px" }}>
                       {item.quantity} × ₪{item.price}
                     </div>
 
-                    {/* ADDITIONS */}
-                    {item.selectedAdditions.length > 0 && (
-                      <div
-                        style={{
-                          marginTop: "6px",
-                          fontSize: "0.85rem",
-                          color: "#555",
-                        }}
-                      >
+                    {item.selectedAdditions?.length > 0 && (
+                      <div style={{ marginTop: "6px", fontSize: "0.85rem" }}>
                         תוספות:
                         <ul style={{ margin: "4px 0 0 18px" }}>
                           {item.selectedAdditions.map((add, i) => (
@@ -204,7 +221,6 @@ return (
                       </div>
                     )}
 
-                    {/* NOTE */}
                     {item.note && (
                       <div
                         style={{
@@ -218,14 +234,7 @@ return (
                     )}
                   </div>
 
-                  {/* ITEM TOTAL */}
-                  <div
-                    style={{
-                      fontWeight: "700",
-                      color: "#ff9800",
-                      alignSelf: "center",
-                    }}
-                  >
+                  <div style={{ fontWeight: "700", color: "#ff9800" }}>
                     ₪{item.totalPrice}
                   </div>
                 </div>
@@ -236,15 +245,12 @@ return (
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  alignItems: "center",
                   marginTop: "20px",
                   paddingTop: "15px",
                   borderTop: "2px dashed #eee",
                 }}
               >
-                <span style={{ fontSize: "1rem", fontWeight: "700" }}>
-                  סה״כ לתשלום
-                </span>
+                <span style={{ fontWeight: "700" }}>סה״כ לתשלום</span>
                 <span
                   style={{
                     fontSize: "1.3rem",
