@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import LocationMap from "../components/common/LocationMap";
 import { useAuth } from "../context/AuthContext";
 import { bookTableApi } from "../api/bookTableApi";
+import Spinner from "../components/common/Spinner"; // your spinner component
 
 export default function BookTable() {
   const { user } = useAuth();
@@ -18,39 +19,43 @@ export default function BookTable() {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false); // ✅ Loading state
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
-  setSuccess("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    setLoading(true); // ✅ Start spinner
 
-  // ❌ User not logged in
-  if (!user) {
-    setError("עליך להתחבר כדי להזמין שולחן");
-    setTimeout(() => navigate("/login"), 1500);
-    return;
-  }
+    if (!user) {
+      setError("עליך להתחבר כדי להזמין שולחן");
+      setTimeout(() => navigate("/login"), 1500);
+      setLoading(false);
+      return;
+    }
 
-  try {
-    await bookTableApi.book(form); // ✅ API call
+    try {
+      await bookTableApi.book(form);
 
-    setSuccess("הזמנת השולחן בוצעה בהצלחה תחכה טלפון לאשר את ההזמנה✅");
-    setForm({
-      name: "",
-      phone: "",
-      email: "",
-      people: "",
-      date: "",
-    });
-  } catch (err) {
-    console.error(err);
-    setError("שגיאה בהזמנת שולחן, נסה שוב");
-  }
-};
+      setSuccess("הזמנת השולחן בוצעה בהצלחה תחכה טלפון לאשר את ההזמנה✅");
+      setForm({
+        name: "",
+        phone: "",
+        email: "",
+        people: "",
+        date: "",
+      });
+    } catch (err) {
+      console.error(err);
+      setError("שגיאה בהזמנת שולחן, נסה שוב");
+    } finally {
+      setLoading(false); // ✅ Stop spinner
+    }
+  };
 
   return (
     <section className="book_section layout_padding">
@@ -122,7 +127,9 @@ const handleSubmit = async (e) => {
                 {success && <p style={{ color: "green", marginTop: "10px" }}>{success}</p>}
 
                 <div className="btn_box">
-                  <button type="submit">תזמין עכשיו</button>
+                  <button type="submit" disabled={loading}>
+                    {loading ? <Spinner /> : "תזמין עכשיו"}
+                  </button>
                 </div>
               </form>
             </div>
