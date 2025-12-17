@@ -10,6 +10,8 @@ import Signup from './pages/Signup';
 import CartPage from './pages/CartPage';
 import Orders from './pages/Order';
 import PrivateRoute from './routes/PrivateRoute';
+import { Navigate } from 'react-router-dom';
+
 const router = createBrowserRouter([
   {
     path: "/orders",
@@ -31,6 +33,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
+      { path: '/', element: <Navigate to="/home" replace /> }, // redirects
       { path: '/login', element: <Login /> },
       { path: '/signup', element: <Signup /> },
       { path: '/cart', element: <CartPage /> },
