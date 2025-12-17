@@ -19,29 +19,46 @@ export default function BookTable() {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false); // ✅ Loading state
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const validateForm = () => {
+    if (!form.name.trim()) return "אנא הזן את שמך";
+    if (!form.phone.trim()) return "אנא הזן מספר טלפון";
+    if (!/^\d{10}$/.test(form.phone)) return "מספר טלפון צריך להיות 10 ספרות";
+    if (!form.email.trim()) return "אנא הזן דואר אלקטרוני";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) return "דואר אלקטרוני לא תקין";
+    if (!form.people) return "אנא בחר מספר אנשים";
+    if (!form.date) return "אנא בחר תאריך";
+    if (new Date(form.date) < new Date().setHours(0,0,0,0)) return "התאריך חייב להיות עתידי";
+    return null;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
-    setLoading(true); // ✅ Start spinner
 
     if (!user) {
       setError("עליך להתחבר כדי להזמין שולחן");
       setTimeout(() => navigate("/login"), 1500);
-      setLoading(false);
       return;
     }
 
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setLoading(true);
+
     try {
       await bookTableApi.book(form);
-
-      setSuccess("הזמנת השולחן בוצעה בהצלחה תחכה טלפון לאשר את ההזמנה✅");
+      setSuccess("הזמנת השולחן בוצעה בהצלחה! תחכה טלפון לאישור ההזמנה ✅");
       setForm({
         name: "",
         phone: "",
@@ -53,7 +70,7 @@ export default function BookTable() {
       console.error(err);
       setError("שגיאה בהזמנת שולחן, נסה שוב");
     } finally {
-      setLoading(false); // ✅ Stop spinner
+      setLoading(false);
     }
   };
 
@@ -76,18 +93,18 @@ export default function BookTable() {
                   placeholder="השם"
                   value={form.name}
                   onChange={handleChange}
-                  required
                 />
 
-                <input
-                  type="text"
-                  name="phone"
-                  className="form-control"
-                  placeholder="מספר טלפון"
-                  value={form.phone}
-                  onChange={handleChange}
-                  required
-                />
+              <input
+                type="tel"
+                name="phone"
+                className="form-control"
+                placeholder="מספר טלפון"
+                value={form.phone}
+                onChange={handleChange}
+                dir="rtl"          // ✅ sets right-to-left input
+                style={{ textAlign: "right" }} // optional, ensures text aligns right
+              />
 
                 <input
                   type="email"
@@ -96,7 +113,6 @@ export default function BookTable() {
                   placeholder="דואר אלקטרוני"
                   value={form.email}
                   onChange={handleChange}
-                  required
                 />
 
                 <select
@@ -104,7 +120,6 @@ export default function BookTable() {
                   className="form-control"
                   value={form.people}
                   onChange={handleChange}
-                  required
                 >
                   <option value="">כמה אנשים</option>
                   <option value="2">2</option>
@@ -119,7 +134,6 @@ export default function BookTable() {
                   className="form-control"
                   value={form.date}
                   onChange={handleChange}
-                  required
                 />
 
                 {/* ERRORS / SUCCESS */}
