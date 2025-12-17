@@ -16,7 +16,7 @@ export default function About(){
                 <div className="detail-box">
                     <div className="heading_container">
                     <h2>
-                        Burgero
+                        Burgero Bar
                     </h2>
                     </div>
                     <p>
