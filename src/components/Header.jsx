@@ -76,19 +76,20 @@ export default function Header() {
               <ul className="navbar-nav mx-auto">
                 <li className="nav-item active"><Link className="nav-link" to="/home">בית</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/menu">תפריט</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/about">עלינו</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/bookTable">הזמנת שולחן</Link></li>
                 {/* Only show login if user is NOT logged in */}
+                {user && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/orders">ההזמנמות שלך</Link>
+                  </li>
+                )}
                 {!user && (
                   <li className="nav-item">
                     <Link className="nav-link" to="/login">להתחבר למערכת</Link>
                   </li>
                 )}
-                {user && (
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/orders">ההזמנמות שלך</Link>
-                    </li>
-                )}
+                <li className="nav-item"><Link className="nav-link" to="/about">עלינו</Link></li>
+
               </ul>
 
            <div className="user_option">

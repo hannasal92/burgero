@@ -46,12 +46,6 @@ export default function Header() {
               <li className={`nav-item ${isActive("/menu")}`}>
                 <Link className="nav-link" to="/menu">תפריט</Link>
               </li>
-              <li className={`nav-item ${isActive("/about")}`}>
-                <Link className="nav-link" to="/about">עלינו</Link>
-              </li>
-              <li className={`nav-item ${isActive("/bookTable")}`}>
-                <Link className="nav-link" to="/bookTable">הזמנת שולחן</Link>
-              </li>
               {!user && (
                 <li className={`nav-item ${isActive("/login")}`}>
                   <Link className="nav-link" to="/login">להתחבר למערכת</Link>
@@ -62,6 +56,12 @@ export default function Header() {
                   <Link className="nav-link" to="/orders">ההזמנות שלך</Link>
                 </li>
               )}
+              <li className={`nav-item ${isActive("/bookTable")}`}>
+                <Link className="nav-link" to="/bookTable">הזמנת שולחן</Link>
+              </li>
+              <li className={`nav-item ${isActive("/about")}`}>
+                <Link className="nav-link" to="/about">עלינו</Link>
+              </li>
             </ul>
 
             <div className="user_option">
