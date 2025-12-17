@@ -1206,4 +1206,17 @@ a:focus {
   color: #ffcc00;
   font-weight: bold;
 }
+.client_section {
+  direction: rtl; /* ensures text and slider flow right-to-left */
+}
+
+.detail-box p, .detail-box h6 {
+  text-align: right; /* align text to the right */
+}
+
+.bottom-arrows-container {
+  display: flex;
+  justify-content: flex-start; /* arrows start from right side */
+  gap: 10px;
+}
 /*# sourceMappingURL=style.css.map */
