@@ -101,11 +101,11 @@ export default function Header() {
                 <CartIcon count={getTotal()} />
               </Link>
               {/* Search Form */}
-              <form className="form-inline">
+              {/* <form className="form-inline">
                 <button className="btn nav_search-btn" type="submit">
                   <i className="fa fa-search"></i>
                 </button>
-              </form>
+              </form> */}
 
               {/* Order Online Link */}
             <Button className="order_online" onClick={handleClick}>

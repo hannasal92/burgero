@@ -71,11 +71,11 @@ export default function Header() {
                 <CartIcon count={getTotal()} />
               </Link>
 
-              <form className="form-inline">
+              {/* <form className="form-inline">
                 <button className="btn nav_search-btn" type="submit">
                   <i className="fa fa-search"></i>
                 </button>
-              </form>
+              </form> */}
 
               <Button className="order_online" onClick={handleClick}>
                 תזמין אונליין

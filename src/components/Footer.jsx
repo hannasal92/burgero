@@ -37,11 +37,17 @@ export default function Footer() {
                 המסעדה שלנו מציעה מגוון המבורגרים עסיסיים, טריים ומיוחדים, בשילוב טעמים ייחודיים, רטבים ביתיים ולחמניות חמות, עם שירות מקצועי, אווירה נעימה וחוויית אוכל בלתי נשכחת לכל לקוח
               </p>
               <div className="footer_social">
-                <Link to="#"><i className="fa fa-facebook" aria-hidden="true"></i></Link>
+                {/* <Link to="#"><i className="fa fa-facebook" aria-hidden="true"></i></Link>
                 <Link to="#"><i className="fa fa-twitter" aria-hidden="true"></i></Link>
-                <Link to="#"><i className="fa fa-linkedin" aria-hidden="true"></i></Link>
-                <Link to="#"><i className="fa fa-instagram" aria-hidden="true"></i></Link>
-                <Link to="#"><i className="fa fa-pinterest" aria-hidden="true"></i></Link>
+                <Link to="#"><i className="fa fa-linkedin" aria-hidden="true"></i></Link> */}
+                <a 
+                  href="https://www.instagram.com/burgerobar/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  <i className="fa fa-instagram" aria-hidden="true"></i>
+                </a>                
+                {/* <Link to="#"><i className="fa fa-pinterest" aria-hidden="true"></i></Link> */}
               </div>
             </div>
           </div>
