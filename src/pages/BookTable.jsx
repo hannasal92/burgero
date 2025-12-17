@@ -1,47 +1,126 @@
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import LocationMap from "../components/common/LocationMap";
+import { useAuth } from "../context/AuthContext";
+import { bookTableApi } from "../api/bookTableApi";
 
 export default function BookTable() {
-  const mapContainerStyle = {
-    width: '100%',
-    height: '400px',
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    people: "",
+    date: "",
+  });
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
-  const center = {
-    lat: 40.7128, // replace with your latitude
-    lng: -74.0060, // replace with your longitude
-  };
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
+  setSuccess("");
+
+  // ❌ User not logged in
+  if (!user) {
+    setError("עליך להתחבר כדי להזמין שולחן");
+    setTimeout(() => navigate("/login"), 1500);
+    return;
+  }
+
+  try {
+    await bookTableApi.book(form); // ✅ API call
+
+    setSuccess("הזמנת השולחן בוצעה בהצלחה תחכה טלפון לאשר את ההזמנה✅");
+    setForm({
+      name: "",
+      phone: "",
+      email: "",
+      people: "",
+      date: "",
+    });
+  } catch (err) {
+    console.error(err);
+    setError("שגיאה בהזמנת שולחן, נסה שוב");
+  }
+};
+
   return (
     <section className="book_section layout_padding">
       <div className="container">
         <div className="heading_container">
           <h2>תזמין שולחן</h2>
         </div>
+
         <div className="row">
+          {/* FORM */}
           <div className="col-md-6">
             <div className="form_container">
-              <form action="">
-                <div>
-                  <input type="text" name="name" className="form-control" placeholder="השם" />
-                </div>
-                <div>
-                  <input type="text" name="phone" className="form-control" placeholder="מספר טלפון" />
-                </div>
-                <div>
-                  <input type="email" name="email" className="form-control" placeholder="דואר אלקטרוני" />
-                </div>
-                <div>
-                  <select className="form-control nice-select wide" defaultValue="">
-                    <option value="" >
-                      כמה אנשים
-                    </option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
-                </div>
-                <div>
-                  <input type="date" name="date" className="form-control" />
-                </div>
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  name="name"
+                  className="form-control"
+                  placeholder="השם"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                />
+
+                <input
+                  type="text"
+                  name="phone"
+                  className="form-control"
+                  placeholder="מספר טלפון"
+                  value={form.phone}
+                  onChange={handleChange}
+                  required
+                />
+
+                <input
+                  type="email"
+                  name="email"
+                  className="form-control"
+                  placeholder="דואר אלקטרוני"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+
+                <select
+                  name="people"
+                  className="form-control"
+                  value={form.people}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">כמה אנשים</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+
+                <input
+                  type="date"
+                  name="date"
+                  className="form-control"
+                  value={form.date}
+                  onChange={handleChange}
+                  required
+                />
+
+                {/* ERRORS / SUCCESS */}
+                {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+                {success && <p style={{ color: "green", marginTop: "10px" }}>{success}</p>}
+
                 <div className="btn_box">
                   <button type="submit">תזמין עכשיו</button>
                 </div>
@@ -49,15 +128,10 @@ export default function BookTable() {
             </div>
           </div>
 
+          {/* MAP */}
           <div className="col-md-6">
             <div className="map_container">
-               <LoadScript googleMapsApiKey="YOUR_GOOGLE_MAPS_API_KEY">
-                <GoogleMap
-                  mapContainerStyle={mapContainerStyle}
-                  center={center}
-                  zoom={15}
-                />
-              </LoadScript>
+              <LocationMap lat={32.0853} lng={34.7818} />
             </div>
           </div>
         </div>

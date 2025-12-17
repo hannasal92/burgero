@@ -1,22 +1,24 @@
 import axios from "axios";
-import { getAuthContext } from "../context/AuthContext"; // helper to access AuthContext outside React
+import { getAuthContext } from "../context/AuthContext";
 
 const axiosClient = axios.create({
   baseURL: "http://localhost:3000/api",
   headers: { "Content-Type": "application/json" },
-  withCredentials: true, // required to send refresh token cookies
 });
 
-// ---- Flag to avoid multiple refresh calls at once ----
-let isRefreshing = false;
-let failedRequestsQueue = []; // just an empty array, JS doesn’t need types
 /* ============================
    REQUEST INTERCEPTOR
 ============================ */
 axiosClient.interceptors.request.use(
   (config) => {
-    const { accessToken } = getAuthContext(); // get token from context
-    if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
+    const { accessToken } = getAuthContext();
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+
+    // initialize retry counter
+    config.__retryCount = config.__retryCount || 0;
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -28,54 +30,36 @@ axiosClient.interceptors.request.use(
 axiosClient.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
+    const { config, response } = error;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+    // ❌ No config = cannot retry
+    if (!config) return Promise.reject(error);
 
-      if (isRefreshing) {
-        // queue all requests while refresh in progress
-        return new Promise((resolve, reject) => {
-          failedRequestsQueue.push({ resolve, reject });
-        })
-          .then((token) => {
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-            return axiosClient(originalRequest);
-          })
-          .catch(Promise.reject);
-      }
+    /* ============================
+       401 → logout user
+    ============================ */
+    if (response?.status === 401) {
+      const { logout } = getAuthContext();
+      logout();
+      return Promise.reject(error);
+    }
 
-      isRefreshing = true;
+    /* ============================
+       RETRY LOGIC (network / 5xx)
+    ============================ */
+    const MAX_RETRIES = 3;
 
-      try {
-        // Call refresh endpoint
-        const res = await axiosClient.post("/auth/refreshToken");
-        const newAccessToken = res.data.accessToken;
+    const shouldRetry =
+      !response || // network error
+      (response.status >= 500 && response.status < 600);
 
-        // Update AuthContext
-        const { updateAccessToken } = getAuthContext();
-        updateAccessToken(newAccessToken);
+    if (shouldRetry && config.__retryCount < MAX_RETRIES) {
+      config.__retryCount += 1;
 
-        // Retry queued requests
-        failedRequestsQueue.forEach((p) => p.resolve(newAccessToken));
-        failedRequestsQueue = [];
-        isRefreshing = false;
+      // optional delay (simple backoff)
+      await new Promise((res) => setTimeout(res, 500 * config.__retryCount));
 
-        // Retry original request
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return axiosClient(originalRequest);
-
-      } catch (err) {
-        failedRequestsQueue.forEach((p) => p.reject(err));
-        failedRequestsQueue = [];
-        isRefreshing = false;
-
-        // Logout user
-        const { logout } = getAuthContext();
-        logout();
-
-        return Promise.reject(err);
-      }
+      return axiosClient(config);
     }
 
     return Promise.reject(error);
