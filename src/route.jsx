@@ -10,6 +10,7 @@ import Signup from './pages/Signup';
 import CartPage from './pages/CartPage';
 import Orders from './pages/Order';
 import PrivateRoute from './routes/PrivateRoute';
+import PublicRoute from './routes/PublicRoute';
 import { Navigate } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -34,8 +35,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: '/', element: <Navigate to="/home" replace /> }, // redirects
-      { path: '/login', element: <Login /> },
-      { path: '/signup', element: <Signup /> },
+      { path: '/login', element: <PublicRoute><Login /></PublicRoute>},
+      { path: '/signup', element:<PublicRoute><Signup /></PublicRoute> },
       { path: '/cart', element: <CartPage /> },
       { path: '/menu', element: <Menu /> },
       { path: '/about', element: <About /> },
