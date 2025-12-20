@@ -25,6 +25,14 @@ export default function BookTable() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const now = new Date();
+  const pad = (num) => String(num).padStart(2, "0");
+
+  // Format: YYYY-MM-DDTHH:MM
+  const minDate = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(
+    now.getDate()
+  )}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
   const validateForm = () => {
     if (!form.name.trim()) return "אנא הזן את שמך";
     if (!form.phone.trim()) return "אנא הזן מספר טלפון";
@@ -128,13 +136,14 @@ export default function BookTable() {
                   <option value="5">5</option>
                 </select>
 
-                <input
-                  type="date"
-                  name="date"
-                  className="form-control"
-                  value={form.date}
-                  onChange={handleChange}
-                />
+                  <input
+                type="datetime-local"
+                name="date"
+                className="form-control"
+                value={form.date}
+                onChange={handleChange}
+                min={minDate} // disable past dates
+              />
 
                 {/* ERRORS / SUCCESS */}
                 {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
