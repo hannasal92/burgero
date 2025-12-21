@@ -51,7 +51,7 @@ export default function Login() {
 
       const data = await loginRequest(form);
       login(data);
-      navigate("/orders"); // redirect after login
+      navigate("/cart"); // redirect after login
   
 
     } catch (error) {

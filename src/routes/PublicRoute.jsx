@@ -6,7 +6,7 @@ export default function PublicRoute({ children }) {
 
   // If user is logged in → redirect
   if (user) {
-    return <Navigate to="/orders" replace />;
+    return <Navigate to="/cart" replace />;
   }
 
   // Otherwise allow access
