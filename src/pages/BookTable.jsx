@@ -74,9 +74,22 @@ export default function BookTable() {
         people: "",
         date: "",
       });
-    } catch (err) {
-      console.error(err);
-      setError("שגיאה בהזמנת שולחן, נסה שוב");
+      } catch (err) {
+
+      if (err.response) {
+        // The request was made and server responded
+        if (err.response.status === 403) {
+          setError(err.response.data.message || "אין הרשאה לבצע פעולה זו");
+        } else {
+          setError("שגיאה בהזמנת שולחן, נסה שוב");
+        }
+      } else if (err.request) {
+        // Request was made but no response
+        setError("לא ניתן להתחבר לשרת, בדוק את החיבור לאינטרנט");
+      } else {
+        // Something else happened
+        setError("שגיאה לא צפויה");
+      }
     } finally {
       setLoading(false);
     }

@@ -36,18 +36,26 @@ export default function PaymentForm({ cart, total, onSuccess }) {
         navigate("/orders");
         setCart([]);
       }, 2000);
-    } catch (err) {
-      const message =
-      err.response?.data?.error ||
-      err.response?.data?.message ||
-      err.message ||
-      "שגיאה בתשלום, נסה שוב";
-     setError(message);
-      
-      // alert("Payment failed. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+      } catch (err) {
+        let message = "שגיאה בתשלום, נסה שוב";
+
+        if (err.response) {
+          // Server responded
+          if (err.response.status === 403) {
+            message = err.response.data?.message || "אין הרשאה לבצע פעולה זו";
+          } else {
+            message = err.response.data?.error || err.response.data?.message || message;
+          }
+        } 
+        else {
+          // Something else
+          message = err.message || message;
+        }
+
+        setError(message);
+      } finally {
+        setLoading(false);
+      }
   };
 
   return (
@@ -89,7 +97,7 @@ export default function PaymentForm({ cart, total, onSuccess }) {
       </button>
             {error && (
               <p style={{ color: "red", textAlign: "center", marginBottom: "10px" }}>
-              {error} - עליך להתחבר למערכת כדי לבצע תשלום
+              {error}
         </p>
       )}
     </form>
