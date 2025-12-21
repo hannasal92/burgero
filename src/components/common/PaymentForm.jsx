@@ -7,6 +7,7 @@ import { useOrders } from "../../context/useOrders";
 
 export default function PaymentForm({ cart, total, onSuccess }) {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const { addOrder } = useOrders();
   const { setCart } = useCart();
   const [paymentSuccess, setPaymentSuccess] = useState(false);
@@ -36,8 +37,14 @@ export default function PaymentForm({ cart, total, onSuccess }) {
         setCart([]);
       }, 2000);
     } catch (err) {
-      console.error("Payment failed:", err);
-      alert("Payment failed. Please try again.");
+      const message =
+      err.response?.data?.error ||
+      err.response?.data?.message ||
+      err.message ||
+      "שגיאה בתשלום, נסה שוב";
+     setError(message);
+      
+      // alert("Payment failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -80,6 +87,11 @@ export default function PaymentForm({ cart, total, onSuccess }) {
           ? "מעבד..."
           : `שלם עכשיו (${total} ₪)`}
       </button>
+            {error && (
+              <p style={{ color: "red", textAlign: "center", marginBottom: "10px" }}>
+              {error} - עליך להתחבר למערכת כדי לבצע תשלום
+        </p>
+      )}
     </form>
   );
 }
