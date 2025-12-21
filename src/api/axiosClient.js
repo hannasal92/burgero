@@ -57,7 +57,8 @@ axiosClient.interceptors.response.use(
       config.__retryCount += 1;
 
       // optional delay (simple backoff)
-      await new Promise((res) => setTimeout(res, 500 * config.__retryCount));
+      //await new Promise((res) => setTimeout(res, 500 * config.__retryCount));
+      await new Promise((res) => setTimeout(res, 2000));
 
       return axiosClient(config);
     }
