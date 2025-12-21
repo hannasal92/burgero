@@ -2,10 +2,11 @@ import { createContext, useState } from "react";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext();
+const DELIVERY_PRICE = 15;
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
-
+  const [delivery, setDelivery] = useState(false);
   const addToCart = (item) => {
     const uniqueItem = {
       ...item,
@@ -89,6 +90,15 @@ const updateAddition = (cartId, additionName, price, selected) => {
     })
   );
 };
+  const toggleDelivery = (value) => {
+    setDelivery(value);
+  };
+  const initiatDelivery = () =>{
+    setDelivery(false);
+  }
+  const getDeliveryPrice = () => {
+    return delivery ? DELIVERY_PRICE : 0;
+  };
   const calculateItemTotal = (item) => {
   const additionsTotal = item.selectedAdditions.reduce(
     (sum, a) => sum + a.price,
@@ -98,7 +108,8 @@ const updateAddition = (cartId, additionName, price, selected) => {
     return (item.price + additionsTotal) * item.quantity;
   };
   const calculateCartTotal = () => {
-  return cart.reduce((sum, item) => sum + calculateItemTotal(item), 0);
+  const ItemTotal = cart.reduce((sum, item) => sum + calculateItemTotal(item), 0);
+  return ItemTotal + getDeliveryPrice();
   };
 
   const getTotal = () => {
@@ -107,7 +118,7 @@ const updateAddition = (cartId, additionName, price, selected) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, setCart, addToCart, removeFromCart, updateQuantity, updateNote, updateAddition, getTotal, calculateCartTotal, calculateItemTotal }}
+      value={{ cart, setCart, addToCart, removeFromCart, updateQuantity, updateNote, updateAddition, getTotal, calculateCartTotal, calculateItemTotal, toggleDelivery, getDeliveryPrice, initiatDelivery, delivery }}
     >
       {children}
     </CartContext.Provider>

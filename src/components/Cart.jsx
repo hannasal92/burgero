@@ -1,5 +1,6 @@
 import { useCart } from "../context/useCart";
 import { Link } from "react-router-dom";
+import DeliveryOption from "./DeliveryOption";
 export default function Cart({
   cartItems = [],
   onIncrease,
@@ -8,12 +9,11 @@ export default function Cart({
   onNoteChange,
   onAddAddition, // new prop
 }) {
-    const { calculateItemTotal} = useCart();
+    const { calculateItemTotal, calculateCartTotal} = useCart();
   
   return (
     <div className="cart-page">
       <h2 className="cart-title">העגלה שלי</h2>
-
       {cartItems.length === 0 ? (
         
         <div
@@ -71,6 +71,8 @@ export default function Cart({
         </div>
       ) : (
         <>
+          <DeliveryOption />
+
           <div className="cart-list">
             {cartItems.map((item) => {
               // const additionsTotal = item.additions?.reduce((sum, a) => sum + (a.selected ? a.price : 0), 0) || 0;
@@ -141,10 +143,7 @@ export default function Cart({
           </div>
 
           <div className="cart-total" style={{ marginTop: "20px", fontWeight: "bold", textAlign: "right" }}>
-            סכום כולל: ₪{cartItems.reduce((sum, item) => {
-              const additionsTotal = item.additions?.reduce((aSum, a) => aSum + (a.selected ? a.price : 0), 0) || 0;
-              return sum + (item.price + additionsTotal) * item.quantity;
-            }, 0)}
+            סכום כולל: ₪{calculateCartTotal()}
           </div>
         </>
       )}
