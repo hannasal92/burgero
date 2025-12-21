@@ -101,7 +101,10 @@ export default function Orders() {
                   >
                     <div>
                       <div style={{ fontWeight: "700", fontSize: isMobile ? "1rem" : "1.1rem" }}>
-                        הזמנה #{order.orderNumber}
+                        הזמנה #{order.orderNumber} 
+                        {order.delivery ? 
+                        <span style={{ fontSize: "1.3rem" , marginRight : "2px" }}>🚚</span> : ""
+                        }
                       </div>
                       <div style={{ fontSize: "0.9rem", color: "#777" }}>{formattedDate}</div>
                     </div>
