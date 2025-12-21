@@ -9,7 +9,7 @@ export default function PaymentForm({ cart, total, onSuccess }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const { addOrder } = useOrders();
-  const { setCart, getDeliveryPrice, initiatDelivery} = useCart();
+  const { setCart, getDeliveryPrice, resetCart} = useCart();
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ export default function PaymentForm({ cart, total, onSuccess }) {
       const res = await paymentApi.pay(cart, total, paymentDetails, getDeliveryPrice(), "creditCard");
       setPaymentSuccess(true);
       if (onSuccess) onSuccess(res.data);
-      initiatDelivery(false);
+      resetCart();
       setTimeout(() => {
         addOrder(res.data.order);
         navigate("/orders");

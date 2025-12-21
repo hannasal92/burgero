@@ -93,8 +93,9 @@ const updateAddition = (cartId, additionName, price, selected) => {
   const toggleDelivery = (value) => {
     setDelivery(value);
   };
-  const initiatDelivery = () =>{
+  const resetCart = () =>{
     setDelivery(false);
+    setCart([])
   }
   const getDeliveryPrice = () => {
     return delivery ? DELIVERY_PRICE : 0;
@@ -118,7 +119,7 @@ const updateAddition = (cartId, additionName, price, selected) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, setCart, addToCart, removeFromCart, updateQuantity, updateNote, updateAddition, getTotal, calculateCartTotal, calculateItemTotal, toggleDelivery, getDeliveryPrice, initiatDelivery, delivery }}
+      value={{ cart, setCart, addToCart, removeFromCart, updateQuantity, updateNote, updateAddition, getTotal, calculateCartTotal, calculateItemTotal, toggleDelivery, getDeliveryPrice, resetCart, delivery }}
     >
       {children}
     </CartContext.Provider>
