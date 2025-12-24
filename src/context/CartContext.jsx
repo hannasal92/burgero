@@ -10,7 +10,7 @@ export function CartProvider({ children }) {
   const addToCart = (item) => {
     const uniqueItem = {
       ...item,
-      cartId: crypto.randomUUID(),
+      cartId: item._id,
       quantity: 1,
       selectedAdditions: [],
       note: "",
