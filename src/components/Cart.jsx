@@ -84,7 +84,7 @@ export default function Cart({
                   key={item.cartId}
                   style={{ border: "1px solid #ddd", padding: "10px", borderRadius: "8px", marginBottom: "10px" }}
                 >
-                  <img src={`../src/images/${item.image}`} alt={item.name} className="cart-img" />
+                  <img src={`/images/${item.image}`} alt={item.name} className="cart-img" />
 
                   <div className="cart-details">
                     <h4 className="cart-name">{item.name}</h4>

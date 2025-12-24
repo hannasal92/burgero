@@ -153,7 +153,7 @@ export default function Orders() {
                       }}
                     >
                       <img
-                        src={`../src/images/${item.imageUrl}`}
+                        src={`/images/${item.imageUrl}`}
                         alt={item.name}
                         style={{
                           width: isMobile ? "100%" : "130px",

@@ -3,6 +3,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import "../css/client.css";
+import client1 from '../images/client1.jpg';
+import client2 from '../images/client2.jpg';
 
 export default function Client() {
 
@@ -11,19 +13,19 @@ export default function Client() {
       name: "מואנה מישל",
       text: "שירות מצוין, האוכל היה טעים מאוד והצוות היה אדיב ומקצועי.",
       subText: "אוכל מצוין",
-      img: "./src/images/client1.jpg",
+      img: client1,
     },
     {
       name: "מייק האמיל",
       text: "חוויה נהדרת! האווירה במקום נעימה והשולחנות תמיד נקיים ומסודרים.",
       subText: "חוויה נהדרת",
-      img: "./src/images/client2.jpg",
+      img: client2,
     },
     {
       name: "שרה לוי",
       text: "הזמנתי שולחן לארוחת ערב והכל היה מושלם. בהחלט אחזור שוב!",
       subText: "שירות מושלם",
-      img: "./src/images/client2.jpg",
+      img: client1,
     },
   ];
 

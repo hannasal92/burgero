@@ -9,6 +9,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from "../context/useCart";
 import UserDropdown from "./common/UserDropDown";
 import { useAuth } from "../context/AuthContext";
+import heroBg from "../images/hero-bg.jpg";
+
 export default function Header() {
     const { user } = useAuth();
   
@@ -56,7 +58,7 @@ export default function Header() {
   return (
       <div className={styles.heroArea}>       {/* Background Image */}
       <div className="bg-box">
-        <img src="./src/images/hero-bg.jpg" alt="" />
+        <img src={heroBg} alt="" />
       </div>
 
       {/* ---------------- HEADER ---------------- */}

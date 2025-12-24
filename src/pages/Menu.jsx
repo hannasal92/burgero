@@ -4,8 +4,6 @@ import AppImage from "../components/common/AppImage";
 import CartIcon from "../components/common/CartIcon";
 import { useCart } from "../context/useCart";
 import { useProducts } from "../context/useProduct";
-
-
 export default function Menu() {
   const [filter, setFilter] = useState("*");
   // const [menuItems, setMenuItems] = useState([]); // <-- products from DB
@@ -66,7 +64,7 @@ export default function Menu() {
                 >
                   <div className="box">
                     <div className="img-box">
-                      <AppImage src={`./src/images/${item.image}`} alt={item.name} />
+                      <AppImage src={`/images/${item.image}`} alt={item.name} />
                     </div>
                     <div className="detail-box" style={{ height: "200px" }}>
                       <h5>{item.name}</h5>

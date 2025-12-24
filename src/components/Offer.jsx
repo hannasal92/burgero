@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import CartIcon from "../components/common/CartIcon";
+import o1 from '../images/o1.jpg'
+import o2 from '../images/o2.jpg'
 
 const OfferBox = ({ img, title, discount, buttonText }) => (
   <div className="col-md-6">
@@ -27,13 +29,13 @@ export default function Offer() {
   // 🔥 Array for loop / map
   const offers = [
     {
-      img: "./src/images/o1.jpg",
+      img: o1,
       title: "חמישי טעים",
       discount: 20,
       buttonText: "תזמין עכשיו",
     },
     {
-      img: "./src/images/o2.jpg",
+      img: o2,
       title: "יום פיצה",
       discount: 15,
       buttonText: "תזמין עכשיו",
