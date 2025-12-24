@@ -1220,22 +1220,22 @@ a:focus {
   gap: 10px;
 }
 
+.mobile-input-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
 .mobile-datetime {
   width: 100%;
   max-width: 100%;
-  min-height: 40px;
-  font-size: 16px; /* prevents iOS zoom */
   box-sizing: border-box;
 }
 
-/* 🔥 iOS Safari overflow fix */
+/* 🍎 iOS-only fix */
 @supports (-webkit-touch-callout: none) {
-  @media (max-width: 768px) {
-    .mobile-datetime {
-      width: calc(100vw - 45px);
-      max-width: 100%;
-      box-sizing: border-box;
-    }
+  .mobile-datetime {
+    width: calc(100vw - 32px);
+    max-width: 100%;
   }
 }
 
