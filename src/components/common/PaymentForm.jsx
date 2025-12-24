@@ -43,7 +43,14 @@ export default function PaymentForm({ cart, total, onSuccess }) {
           // Server responded
           if (err.response.status === 403) {
             message = err.response.data?.message || "אין הרשאה לבצע פעולה זו";
-          } else {
+          } 
+          else if(err.response.status === 401) {
+            message = err.response.data?.message || "אין הרשאה לבצע פעולה זו";
+                  setTimeout(() => {
+                  navigate("/login");
+                }, 2000);
+          }
+          else {
             message = err.response.data?.error || err.response.data?.message || message;
           }
         } 
