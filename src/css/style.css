@@ -1234,7 +1234,7 @@ a:focus {
 /* 🍎 iOS-only fix */
 @supports (-webkit-touch-callout: none) {
   .mobile-datetime {
-    width: calc(100vw - 32px);
+    width: calc(100vw - 35px);
     max-width: 100%;
   }
 }
