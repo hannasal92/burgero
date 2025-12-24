@@ -4,8 +4,11 @@ import AppImage from "../components/common/AppImage";
 import CartIcon from "../components/common/CartIcon";
 import { useCart } from "../context/useCart";
 import { useProducts } from "../context/useProduct";
+import { useNavigate } from "react-router-dom";
+
 export default function Menu() {
   const [filter, setFilter] = useState("*");
+  const navigate = useNavigate();
   // const [menuItems, setMenuItems] = useState([]); // <-- products from DB
   const { addToCart } = useCart();
   const { products } = useProducts();
@@ -104,6 +107,7 @@ export default function Menu() {
                 boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
                 zIndex: 9999,
               }}
+              onClick={() => navigate("/cart")} // navigate on click
             >
               {addedItem} נוסף לעגלה! 🛒
             </motion.div>
