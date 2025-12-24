@@ -9,7 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from "../context/useCart";
 import UserDropdown from "./common/UserDropDown";
 import { useAuth } from "../context/AuthContext";
-import heroBg from "../images/hero-bg.jpg";
+import heroBg from "/images/hero-bg.jpg";
 
 export default function Header() {
     const { user } = useAuth();
