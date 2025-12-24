@@ -1223,7 +1223,7 @@ a:focus {
 .mobile-datetime {
   width: 100%;
   max-width: 100%;
-  min-height: 48px;
+  min-height: 40px;
   font-size: 16px; /* prevents iOS zoom */
   box-sizing: border-box;
 }
@@ -1231,7 +1231,7 @@ a:focus {
 /* 🔥 iOS Safari overflow fix */
 @supports (-webkit-touch-callout: none) {
   .mobile-datetime {
-    width: calc(100vw - 32px); /* container padding */
+    width: calc(100vw - 40px);
   }
 }
 
