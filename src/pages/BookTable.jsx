@@ -151,21 +151,13 @@ export default function BookTable() {
                 <label className="form-label">בחר תאריך ושעה</label>
 
                 <input
-                  type="datetime-local"
-                  name="date"
-                  className="form-control w-100"
-                  value={form.date}
-                  onChange={handleChange}
-                  min={minDate}
-                  style={{
-                    width: "100%",
-                    maxWidth: "100%",
-                    minHeight: "48px",
-                    fontSize: "16px",
-                    padding: "10px 12px",
-                    boxSizing: "border-box",
-                  }}
-                />
+                type="datetime-local"
+                name="date"
+                className="form-control mobile-datetime"
+                value={form.date}
+                onChange={handleChange}
+                min={minDate}
+              />
 
                 {/* ERRORS / SUCCESS */}
                 {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
