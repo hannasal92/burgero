@@ -1230,8 +1230,12 @@ a:focus {
 
 /* 🔥 iOS Safari overflow fix */
 @supports (-webkit-touch-callout: none) {
-  .mobile-datetime {
-    width: calc(100vw - 40px);
+  @media (max-width: 768px) {
+    .mobile-datetime {
+      width: calc(100vw - 45px);
+      max-width: 100%;
+      box-sizing: border-box;
+    }
   }
 }
 
