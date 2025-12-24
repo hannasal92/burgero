@@ -5,7 +5,7 @@ import Menu from "../pages/Menu.jsx";
 import Client from "./Client.jsx";
 import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
-import Offer from "./offer.jsx";
+import Offer from "./Offer.jsx";
 
 export default function Home() {
     return (
