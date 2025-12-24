@@ -5,10 +5,22 @@ import styles from "./Header.module.css";
 import { useState } from "react";
 import CartIcon from "../components/common/CartIcon";
 import Button from "../components/common/Button";
+import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from "../context/useCart";
+import UserDropdown from "./common/UserDropDown";
+import { useAuth } from "../context/AuthContext";
+import heroBg from "/images/hero-bg.jpg";
 
 export default function Header() {
+    const { user } = useAuth();
+  
   const [isOpen, setIsOpen] = useState(false);
+  const { getTotal } = useCart();
+  const navigate = useNavigate();
 
+  const handleClick = () => {
+    navigate("/menu"); // navigate to /menu
+  };
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
@@ -43,19 +55,17 @@ export default function Header() {
   };
 
   let sliderRef = null;
-
   return (
-    <div className="hero_area">
-      {/* Background Image */}
+      <div className={styles.heroArea}>       {/* Background Image */}
       <div className="bg-box">
-        <img src="./src/images/hero-bg.jpg" alt="" />
+        <img src={heroBg} alt="" />
       </div>
 
       {/* ---------------- HEADER ---------------- */}
       <header className="header_section">
         <div className="container">
           <nav className="navbar navbar-expand-lg custom_nav-container">
-            <a className="navbar-brand" href="#"><span>Burgero</span></a>
+            <Link className="navbar-brand" to="/home"><span>Burgero Bar</span></Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -66,30 +76,41 @@ export default function Header() {
 
             <div className={`collapse navbar-collapse ${isOpen ? "show" : ""}`}>
               <ul className="navbar-nav mx-auto">
-                <li className="nav-item active"><a className="nav-link" href="#">בית</a></li>
-                <li className="nav-item"><a className="nav-link" href="#">תפריט</a></li>
-                <li className="nav-item"><a className="nav-link" href="#">עלינו</a></li>
-                <li className="nav-item"><a className="nav-link" href="#">הזמנת שולחן</a></li>
+                <li className="nav-item active"><Link className="nav-link" to="/home">בית</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/menu">תפריט</Link></li>
+                {/* Only show login if user is NOT logged in */}
+                {!user && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/login">להתחבר למערכת</Link>
+                  </li>
+                )}
+                {user && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/orders">ההזמנמות שלך</Link>
+                  </li>
+                )}
+                <li className="nav-item"><Link className="nav-link" to="/bookTable">הזמנת שולחן</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/about">עלינו</Link></li>
+
               </ul>
 
            <div className="user_option">
               {/* User Icon */}
-              <a href="#" className="user_link">
-                <i className="fa fa-user"></i>
-              </a>
+              <UserDropdown />
+            
 
-               <a className="cart_link" href="#">
-                <CartIcon />
-              </a>
+               <Link className="cart_link" to="/cart">
+                <CartIcon count={getTotal()} />
+              </Link>
               {/* Search Form */}
-              <form className="form-inline">
+              {/* <form className="form-inline">
                 <button className="btn nav_search-btn" type="submit">
                   <i className="fa fa-search"></i>
                 </button>
-              </form>
+              </form> */}
 
               {/* Order Online Link */}
-            <Button className="order_online">
+            <Button className="order_online" onClick={handleClick}>
               תזמין אונליין
             </Button>
               {/* Cart Icon */}
@@ -111,7 +132,7 @@ export default function Header() {
               <p className={styles.text}>{slider.text}</p>
 
             <div className={styles.btnBox}>
-            <Button className={styles.btn1}>
+            <Button className={styles.btn1} onClick={handleClick}>
               תזמין עכשיו
             </Button>
           </div>

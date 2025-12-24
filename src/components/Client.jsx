@@ -3,27 +3,29 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import "../css/client.css";
+import client1 from '/images/client1.jpg';
+import client2 from '/images/client2.jpg';
 
 export default function Client() {
 
   const clients = [
     {
-      name: "Moana Michell",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      subText: "magna aliqua",
-      img: "./src/images/client1.jpg",
+      name: "מואנה מישל",
+      text: "שירות מצוין, האוכל היה טעים מאוד והצוות היה אדיב ומקצועי.",
+      subText: "אוכל מצוין",
+      img: client1,
     },
     {
-      name: "Mike Hamell",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      subText: "magna aliqua",
-      img: "./src/images/client2.jpg",
+      name: "מייק האמיל",
+      text: "חוויה נהדרת! האווירה במקום נעימה והשולחנות תמיד נקיים ומסודרים.",
+      subText: "חוויה נהדרת",
+      img: client2,
     },
     {
-      name: "Mike Hamell",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      subText: "magna aliqua",
-      img: "./src/images/client2.jpg",
+      name: "שרה לוי",
+      text: "הזמנתי שולחן לארוחת ערב והכל היה מושלם. בהחלט אחזור שוב!",
+      subText: "שירות מושלם",
+      img: client1,
     },
   ];
 
@@ -36,6 +38,7 @@ export default function Client() {
     autoplay: true,
     autoplaySpeed: 4000,
     arrows: false, // we hide default arrows
+    rtl: true, // ✅ Enable RTL
   };
 
   let sliderRef = null;
