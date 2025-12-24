@@ -149,15 +149,18 @@ export default function BookTable() {
                   <option value="5">5</option>
                 </select>
                 <label className="form-label">בחר תאריך ושעה</label>
-
+              {/* <input type="date" className="form-control" />
+              <input type="time" className="form-control" /> */}
+              <div className="mobile-input-wrap">
                 <input
-                type="datetime-local"
-                name="date"
-                className="form-control mobile-datetime"
-                value={form.date}
-                onChange={handleChange}
-                min={minDate}
-              />
+                  type="datetime-local"
+                  name="date"
+                  className="form-control mobile-datetime"
+                  value={form.date}
+                  onChange={handleChange}
+                  min={minDate}
+                />
+              </div>
 
                 {/* ERRORS / SUCCESS */}
                 {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
