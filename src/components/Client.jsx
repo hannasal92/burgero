@@ -3,8 +3,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import "../css/client.css";
-import client1 from '../images/client1.jpg';
-import client2 from '../images/client2.jpg';
+import client1 from '/images/client1.jpg';
+import client2 from '/images/client2.jpg';
 
 export default function Client() {
 

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import aboutImg from '../images/about-img.png'
+import aboutImg from '/images/about-img.png'
 export default function About(){
     return (
         <>
