@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cart from "../components/Cart";
 import { useCart } from "../context/useCart";
 import Modal from "../components/common/Modal";
@@ -8,6 +8,14 @@ export default function CartPage() {
   const { cart, updateQuantity, removeFromCart, updateNote, updateAddition, calculateCartTotal} = useCart();
   //const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const [showPayment, setShowPayment] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant", // change to "smooth" if you want animation
+    });
+  }, []);
 
   const handlePayClick = () => {
     if (cart.length === 0) {

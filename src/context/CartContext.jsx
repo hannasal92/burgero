@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-
+import { nanoid } from "nanoid";
 // eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext();
 const DELIVERY_PRICE = 15;
@@ -10,7 +10,7 @@ export function CartProvider({ children }) {
   const addToCart = (item) => {
     const uniqueItem = {
       ...item,
-      cartId: item._id,
+      cartId: nanoid(),
       quantity: 1,
       selectedAdditions: [],
       note: "",
