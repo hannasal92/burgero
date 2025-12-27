@@ -5,11 +5,12 @@ import CartIcon from "../components/common/CartIcon";
 import { useCart } from "../context/useCart";
 import { useProducts } from "../context/useProduct";
 import { useNavigate } from "react-router-dom";
+import FloatingCart from "../components/FloatingCart";
 
 export default function Menu() {
   const [filter, setFilter] = useState("*");
   const navigate = useNavigate();
-  // const [menuItems, setMenuItems] = useState([]); // <-- products from DB
+  const [showFloatingCart, setShowFloatingCart] = useState(false);
   const { addToCart } = useCart();
   const { products } = useProducts();
   const [addedItem, setAddedItem] = useState(null);
@@ -30,6 +31,7 @@ export default function Menu() {
   const handleAddToCart = (item) => {
     addToCart({ ...item, quantity: 1, note: "" });
     setAddedItem(item.name);
+    setShowFloatingCart(true);
     setTimeout(() => setAddedItem(null), 2000);
   };
 
@@ -113,6 +115,8 @@ export default function Menu() {
             </motion.div>
           )}
         </AnimatePresence>
+        
+        <FloatingCart visible={showFloatingCart} />
       </div>
     </section>
   );
